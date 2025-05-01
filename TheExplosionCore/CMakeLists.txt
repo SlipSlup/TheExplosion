@@ -18,6 +18,7 @@ set(
 	
 	src/window.hpp
 	src/OpenGL/shader_program.hpp
+	src/OpenGL/vertex_buffer.hpp
 	
 )
 
@@ -28,6 +29,7 @@ set(
 	src/application.cpp
 	src/window.cpp
 	src/OpenGL/shader_program.cpp
+	src/OpenGL/vertex_buffer.cpp
 	
 )
 

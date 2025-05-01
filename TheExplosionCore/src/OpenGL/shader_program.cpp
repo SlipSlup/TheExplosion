@@ -24,7 +24,6 @@ namespace TheExplosion {
 		glAttachShader(m_id, vertex_shader_id);
 		glAttachShader(m_id, fragment_shader_id);
 		glLinkProgram(m_id);
-		m_isCompiled = true;
 		glDetachShader(m_id, vertex_shader_id);
 		glDetachShader(m_id, fragment_shader_id);
 		glDeleteShader(vertex_shader_id);
@@ -42,9 +41,7 @@ namespace TheExplosion {
 
 		glDeleteProgram(m_id);
 		m_id = shaderProgram.m_id;
-		m_isCompiled = shaderProgram.m_isCompiled;
 		shaderProgram.m_id = 0;
-		shaderProgram.m_isCompiled = false;
 		return *this;
 
 	}
@@ -52,9 +49,7 @@ namespace TheExplosion {
 	ShaderProgram::ShaderProgram (ShaderProgram&& shaderProgram) {
 
 		m_id = shaderProgram.m_id;
-		m_isCompiled = shaderProgram.m_isCompiled;
 		shaderProgram.m_id = 0;
-		shaderProgram.m_isCompiled = false;
 
 	}
 

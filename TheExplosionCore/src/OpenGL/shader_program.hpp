@@ -16,11 +16,9 @@ namespace TheExplosion {
 		ShaderProgram& operator = (const ShaderProgram&) = delete;
 		void bind() const;
 		static void unbind();
-		bool isCompiled() const { return m_isCompiled; }
 
 	private:
 
-		bool m_isCompiled = false;
 		unsigned int m_id = 0;
 
 	};

@@ -30,6 +30,6 @@ int GetDesktopHeight() {
 int main() {
 
     auto app = std::make_unique<App>();
-	int returnCode = app->start(GetDesktopWidth() - 1, GetDesktopHeight() - 1, "TheExplosion");
+	int returnCode = app->start(GetDesktopWidth() - 2, GetDesktopHeight() - 2, "TheExplosion");
 
 }
