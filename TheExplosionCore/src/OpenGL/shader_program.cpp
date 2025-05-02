@@ -37,7 +37,7 @@ namespace TheExplosion {
 
 	void ShaderProgram::unbind() { glUseProgram(0); }
 
-	ShaderProgram& ShaderProgram::operator = (ShaderProgram&& shaderProgram) {
+	ShaderProgram& ShaderProgram::operator = (ShaderProgram&& shaderProgram) noexcept {
 
 		glDeleteProgram(m_id);
 		m_id = shaderProgram.m_id;
@@ -46,7 +46,7 @@ namespace TheExplosion {
 
 	}
 
-	ShaderProgram::ShaderProgram (ShaderProgram&& shaderProgram) {
+	ShaderProgram::ShaderProgram (ShaderProgram&& shaderProgram) noexcept {
 
 		m_id = shaderProgram.m_id;
 		shaderProgram.m_id = 0;

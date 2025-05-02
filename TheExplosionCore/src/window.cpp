@@ -8,6 +8,7 @@
 #include "application.hpp"
 #include "OpenGL/shader_program.hpp"
 #include "OpenGL/vertex_buffer.hpp"
+#include "OpenGL/vertex_array.hpp"
 
 namespace TheExplosion {
 
@@ -57,12 +58,11 @@ namespace TheExplosion {
     std::unique_ptr<ShaderProgram> p_shader_program;
     std::unique_ptr<VertexBuffer> p_points_vbo;
     std::unique_ptr<VertexBuffer> p_colors_vbo;
-    GLuint vao;
+    std::unique_ptr<VertexArray> p_vao;
 
     Window::Window(std::string title, const unsigned int width, const unsigned int height) : m_data({ std::move(title), width, height }) {
         
         int resultCode = init();
-
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGui_ImplOpenGL3_Init();
@@ -99,26 +99,16 @@ namespace TheExplosion {
 
             m_pWindow,
 
-            [](GLFWwindow* pWindow, int width, int height) {
-
-                glViewport(0, 0, width, height);
-
-            }
+            [](GLFWwindow* pWindow, int width, int height) { glViewport(0, 0, width, height); }
 
         );
 
         p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
-
         p_points_vbo = std::make_unique<VertexBuffer>(points, sizeof(points));
         p_colors_vbo = std::make_unique<VertexBuffer>(colors, sizeof(colors));
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-        glEnableVertexAttribArray(0);
-        p_points_vbo->bind();
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-        glEnableVertexAttribArray(1);
-        p_colors_vbo->bind();
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+        p_vao = std::make_unique<VertexArray>();
+        p_vao->add_buffer(*p_points_vbo);
+        p_vao->add_buffer(*p_colors_vbo);
 
         return 0;
 
@@ -135,11 +125,9 @@ namespace TheExplosion {
         
         glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], 1);
         glClear(GL_COLOR_BUFFER_BIT);
-
         p_shader_program->bind();
-        glBindVertexArray(vao);
+        p_vao->bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
-
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize.x = static_cast<float>(get_width());
         io.DisplaySize.y = static_cast<float>(get_height());
@@ -171,7 +159,6 @@ namespace TheExplosion {
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(m_pWindow);
         glfwPollEvents();
 
