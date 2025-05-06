@@ -40,7 +40,14 @@ namespace TheExplosion {
 		void shutdown();
 		GLFWwindow* m_pWindow = nullptr;
 		WindowData m_data;
+		bool leave = false;
 		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
+		float m_triangle_angle1_color[3] = { 0.5f, 0.5f, 0.0f };
+		float m_triangle_angle2_color[3] = { 0.0f, 0.5f, 0.5f };
+		float m_triangle_angle3_color[3] = { 0.5f, 0.0f, 0.5f };
+		float m_triangle_angle1_position[3] = {  0.0f,  0.5f, 0.0f };
+		float m_triangle_angle2_position[3] = {  0.5f, -0.5f, 0.0f };
+		float m_triangle_angle3_position[3] = { -0.5f, -0.5f, 0.0f };
 
 	};
 

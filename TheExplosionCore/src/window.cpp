@@ -13,23 +13,6 @@
 namespace TheExplosion {
 
     static bool s_GLFW_initialized = false;
-    bool escape = false;
-
-    GLfloat points[] = {
-
-         0.0f,  0.1f, 0.0f,
-         0.1f, -0.1f, 0.0f,
-        -0.1f, -0.1f, 0.0f
-
-    };
-
-    GLfloat colors[] = {
-
-        0.5f, 0.5f, 0.0f,
-        0.0f, 0.5f, 0.5f,
-        0.5f, 0.0f, 0.5f
-
-    };
 
     const char* vertex_shader = "#version 460\n"
                                 " "
@@ -54,11 +37,6 @@ namespace TheExplosion {
                                     "   frag_color = vec4(color, 1.0);"
                                     " "
                                     "}";
-
-    std::unique_ptr<ShaderProgram> p_shader_program;
-    std::unique_ptr<VertexBuffer> p_points_vbo;
-    std::unique_ptr<VertexBuffer> p_colors_vbo;
-    std::unique_ptr<VertexArray> p_vao;
 
     Window::Window(std::string title, const unsigned int width, const unsigned int height) : m_data({ std::move(title), width, height }) {
         
@@ -103,13 +81,6 @@ namespace TheExplosion {
 
         );
 
-        p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
-        p_points_vbo = std::make_unique<VertexBuffer>(points, sizeof(points));
-        p_colors_vbo = std::make_unique<VertexBuffer>(colors, sizeof(colors));
-        p_vao = std::make_unique<VertexArray>();
-        p_vao->add_buffer(*p_points_vbo);
-        p_vao->add_buffer(*p_colors_vbo);
-
         return 0;
 
 	}
@@ -123,8 +94,33 @@ namespace TheExplosion {
 
 	void Window::on_update() {
         
+        GLfloat triangle_data[] = {
+
+            m_triangle_angle1_position[0], m_triangle_angle1_position[1], m_triangle_angle1_position[2], m_triangle_angle1_color[0], m_triangle_angle1_color[1], m_triangle_angle1_color[2],
+            m_triangle_angle2_position[0], m_triangle_angle2_position[1], m_triangle_angle2_position[2], m_triangle_angle2_color[0], m_triangle_angle2_color[1], m_triangle_angle2_color[2],
+            m_triangle_angle3_position[0], m_triangle_angle3_position[1], m_triangle_angle3_position[2], m_triangle_angle3_color[0], m_triangle_angle3_color[1], m_triangle_angle3_color[2]
+
+        };
+
+        BufferLayout buffer_layout_2vec3{
+
+            ShaderDataType::Float3,
+            ShaderDataType::Float3
+
+        };
+
+        std::unique_ptr<ShaderProgram> p_shader_program;
+        std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
+        std::unique_ptr<VertexArray> p_vao;
+
+        p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
+        p_vao = std::make_unique<VertexArray>();
+        p_positions_colors_vbo = std::make_unique<VertexBuffer>(triangle_data, sizeof(triangle_data), buffer_layout_2vec3);
+        p_vao->add_buffer(*p_positions_colors_vbo);
+
         glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], 1);
         glClear(GL_COLOR_BUFFER_BIT);
+
         p_shader_program->bind();
         p_vao->bind();
         glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -135,9 +131,9 @@ namespace TheExplosion {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if(ImGui::IsKeyPressed(ImGuiKey_Escape)) escape = !escape;
+        if(ImGui::IsKeyPressed(ImGuiKey_Escape)) leave = !leave;
 
-        if(escape) {
+        if(leave) {
 
             ImGui::SetNextWindowSize(ImVec2(185, 90));
             ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f), ImGuiCond_Once, ImVec2(0.5f, 0.5f));
@@ -151,11 +147,33 @@ namespace TheExplosion {
 
         }
 
-        ImGui::ShowDemoWindow();
+        ImGui::Begin("Menu");
 
-        ImGui::Begin("Background");
-        ImGui::ColorEdit3("Background Color", m_background_color);
+        ImGui::Text("Background");
+
+        if(ImGui::CollapsingHeader("Background Color")) { ImGui::ColorEdit3("Background Color", m_background_color); }
+
+        ImGui::Text("Triangle");
+
+        if(ImGui::CollapsingHeader("Triangle Colors")) {
+
+            ImGui::ColorEdit3("Angle 1 Color", m_triangle_angle1_color);
+            ImGui::ColorEdit3("Angle 2 Color", m_triangle_angle2_color);
+            ImGui::ColorEdit3("Angle 3 Color", m_triangle_angle3_color);
+
+        }
+
+        if(ImGui::CollapsingHeader("Triangle Positions")) {
+
+            ImGui::DragFloat3("Angle 1 Position", m_triangle_angle1_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 2 Position", m_triangle_angle2_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 3 Position", m_triangle_angle3_position, 0.005f, -1.0f, 1.0f);
+
+        }
+        
         ImGui::End();
+
+        //ImGui::ShowDemoWindow();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
