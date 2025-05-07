@@ -20,6 +20,7 @@ set(
 	src/OpenGL/shader_program.hpp
 	src/OpenGL/vertex_buffer.hpp
 	src/OpenGL/vertex_array.hpp
+	src/OpenGL/index_buffer.hpp
 	
 )
 
@@ -32,6 +33,7 @@ set(
 	src/OpenGL/shader_program.cpp
 	src/OpenGL/vertex_buffer.cpp
 	src/OpenGL/vertex_array.cpp
+	src/OpenGL/index_buffer.cpp
 	
 )
 

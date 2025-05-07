@@ -9,6 +9,7 @@
 #include "OpenGL/shader_program.hpp"
 #include "OpenGL/vertex_buffer.hpp"
 #include "OpenGL/vertex_array.hpp"
+#include "OpenGL/index_buffer.hpp"
 
 namespace TheExplosion {
 
@@ -94,13 +95,16 @@ namespace TheExplosion {
 
 	void Window::on_update() {
         
-        GLfloat triangle_data[] = {
+        GLfloat square_data[] = {
 
-            m_triangle_angle1_position[0], m_triangle_angle1_position[1], m_triangle_angle1_position[2], m_triangle_angle1_color[0], m_triangle_angle1_color[1], m_triangle_angle1_color[2],
-            m_triangle_angle2_position[0], m_triangle_angle2_position[1], m_triangle_angle2_position[2], m_triangle_angle2_color[0], m_triangle_angle2_color[1], m_triangle_angle2_color[2],
-            m_triangle_angle3_position[0], m_triangle_angle3_position[1], m_triangle_angle3_position[2], m_triangle_angle3_color[0], m_triangle_angle3_color[1], m_triangle_angle3_color[2]
+            m_square_angle1_position[0], m_square_angle1_position[1], m_square_angle1_position[2], m_square_angle1_color[0], m_square_angle1_color[1], m_square_angle1_color[2],
+            m_square_angle2_position[0], m_square_angle2_position[1], m_square_angle2_position[2], m_square_angle2_color[0], m_square_angle2_color[1], m_square_angle2_color[2],
+            m_square_angle3_position[0], m_square_angle3_position[1], m_square_angle3_position[2], m_square_angle3_color[0], m_square_angle3_color[1], m_square_angle3_color[2],
+            m_square_angle4_position[0], m_square_angle4_position[1], m_square_angle4_position[2], m_square_angle4_color[0], m_square_angle4_color[1], m_square_angle4_color[2]
 
         };
+
+        GLuint indices[] = { 0, 1, 2, 3, 2, 1 };
 
         BufferLayout buffer_layout_2vec3{
 
@@ -111,19 +115,22 @@ namespace TheExplosion {
 
         std::unique_ptr<ShaderProgram> p_shader_program;
         std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
+        std::unique_ptr<IndexBuffer> p_index_buffer;
         std::unique_ptr<VertexArray> p_vao;
 
         p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
         p_vao = std::make_unique<VertexArray>();
-        p_positions_colors_vbo = std::make_unique<VertexBuffer>(triangle_data, sizeof(triangle_data), buffer_layout_2vec3);
-        p_vao->add_buffer(*p_positions_colors_vbo);
+        p_positions_colors_vbo = std::make_unique<VertexBuffer>(square_data, sizeof(square_data), buffer_layout_2vec3);
+        p_index_buffer = std::make_unique<IndexBuffer>(indices, sizeof(indices) / sizeof(GLuint));
+        p_vao->add_vertex_buffer(*p_positions_colors_vbo);
+        p_vao->set_index_buffer(*p_index_buffer);
 
         glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         p_shader_program->bind();
         p_vao->bind();
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(p_vao->get_indices_count()), GL_UNSIGNED_INT, nullptr);
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize.x = static_cast<float>(get_width());
         io.DisplaySize.y = static_cast<float>(get_height());
@@ -153,27 +160,27 @@ namespace TheExplosion {
 
         if(ImGui::CollapsingHeader("Background Color")) { ImGui::ColorEdit3("Background Color", m_background_color); }
 
-        ImGui::Text("Triangle");
+        ImGui::Text("Square");
 
-        if(ImGui::CollapsingHeader("Triangle Colors")) {
+        if(ImGui::CollapsingHeader("Square Colors")) {
 
-            ImGui::ColorEdit3("Angle 1 Color", m_triangle_angle1_color);
-            ImGui::ColorEdit3("Angle 2 Color", m_triangle_angle2_color);
-            ImGui::ColorEdit3("Angle 3 Color", m_triangle_angle3_color);
+            ImGui::ColorEdit3("Angle 1 Color", m_square_angle1_color);
+            ImGui::ColorEdit3("Angle 2 Color", m_square_angle2_color);
+            ImGui::ColorEdit3("Angle 3 Color", m_square_angle3_color);
+            ImGui::ColorEdit3("Angle 4 Color", m_square_angle4_color);
 
         }
 
-        if(ImGui::CollapsingHeader("Triangle Positions")) {
+        if(ImGui::CollapsingHeader("Square Positions")) {
 
-            ImGui::DragFloat3("Angle 1 Position", m_triangle_angle1_position, 0.005f, -1.0f, 1.0f);
-            ImGui::DragFloat3("Angle 2 Position", m_triangle_angle2_position, 0.005f, -1.0f, 1.0f);
-            ImGui::DragFloat3("Angle 3 Position", m_triangle_angle3_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 1 Position", m_square_angle1_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 2 Position", m_square_angle2_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 3 Position", m_square_angle3_position, 0.005f, -1.0f, 1.0f);
+            ImGui::DragFloat3("Angle 4 Position", m_square_angle4_position, 0.005f, -1.0f, 1.0f);
 
         }
         
         ImGui::End();
-
-        //ImGui::ShowDemoWindow();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
