@@ -39,6 +39,11 @@ namespace TheExplosion {
                                     " "
                                     "}";
 
+    std::unique_ptr<ShaderProgram> p_shader_program;
+    std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
+    std::unique_ptr<IndexBuffer> p_index_buffer;
+    std::unique_ptr<VertexArray> p_vao;
+
     Window::Window(std::string title, const unsigned int width, const unsigned int height) : m_data({ std::move(title), width, height }) {
         
         int resultCode = init();
@@ -82,25 +87,12 @@ namespace TheExplosion {
 
         );
 
-        return 0;
-
-	}
-
-	void Window::shutdown() {
-
-        glfwDestroyWindow(m_pWindow);
-        glfwTerminate();
-
-	}
-
-	void Window::on_update() {
-        
         GLfloat square_data[] = {
 
-            m_square_angle1_position[0], m_square_angle1_position[1], m_square_angle1_position[2], m_square_angle1_color[0], m_square_angle1_color[1], m_square_angle1_color[2],
-            m_square_angle2_position[0], m_square_angle2_position[1], m_square_angle2_position[2], m_square_angle2_color[0], m_square_angle2_color[1], m_square_angle2_color[2],
-            m_square_angle3_position[0], m_square_angle3_position[1], m_square_angle3_position[2], m_square_angle3_color[0], m_square_angle3_color[1], m_square_angle3_color[2],
-            m_square_angle4_position[0], m_square_angle4_position[1], m_square_angle4_position[2], m_square_angle4_color[0], m_square_angle4_color[1], m_square_angle4_color[2]
+                m_square_angle1_position[0], m_square_angle1_position[1], m_square_angle1_position[2], m_square_angle1_color[0], m_square_angle1_color[1], m_square_angle1_color[2],
+                m_square_angle2_position[0], m_square_angle2_position[1], m_square_angle2_position[2], m_square_angle2_color[0], m_square_angle2_color[1], m_square_angle2_color[2],
+                m_square_angle3_position[0], m_square_angle3_position[1], m_square_angle3_position[2], m_square_angle3_color[0], m_square_angle3_color[1], m_square_angle3_color[2],
+                m_square_angle4_position[0], m_square_angle4_position[1], m_square_angle4_position[2], m_square_angle4_color[0], m_square_angle4_color[1], m_square_angle4_color[2]
 
         };
 
@@ -113,11 +105,6 @@ namespace TheExplosion {
 
         };
 
-        std::unique_ptr<ShaderProgram> p_shader_program;
-        std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
-        std::unique_ptr<IndexBuffer> p_index_buffer;
-        std::unique_ptr<VertexArray> p_vao;
-
         p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
         p_vao = std::make_unique<VertexArray>();
         p_positions_colors_vbo = std::make_unique<VertexBuffer>(square_data, sizeof(square_data), buffer_layout_2vec3);
@@ -125,15 +112,25 @@ namespace TheExplosion {
         p_vao->add_vertex_buffer(*p_positions_colors_vbo);
         p_vao->set_index_buffer(*p_index_buffer);
 
+        return 0;
+
+	}
+
+	void Window::shutdown() {
+
+        glfwDestroyWindow(m_pWindow);
+        glfwTerminate();
+
+	}
+
+	void Window::on_update() {
+
         glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
         p_shader_program->bind();
         p_vao->bind();
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(p_vao->get_indices_count()), GL_UNSIGNED_INT, nullptr);
-        ImGuiIO& io = ImGui::GetIO();
-        io.DisplaySize.x = static_cast<float>(get_width());
-        io.DisplaySize.y = static_cast<float>(get_height());
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -164,23 +161,54 @@ namespace TheExplosion {
 
         if(ImGui::CollapsingHeader("Square Colors")) {
 
-            ImGui::ColorEdit3("Angle 1 Color", m_square_angle1_color);
-            ImGui::ColorEdit3("Angle 2 Color", m_square_angle2_color);
-            ImGui::ColorEdit3("Angle 3 Color", m_square_angle3_color);
-            ImGui::ColorEdit3("Angle 4 Color", m_square_angle4_color);
+            if(ImGui::ColorEdit3("Angle 1 Color", m_square_angle1_color)) square_edit = true;
+            if(ImGui::ColorEdit3("Angle 2 Color", m_square_angle2_color)) square_edit = true;
+            if(ImGui::ColorEdit3("Angle 3 Color", m_square_angle3_color)) square_edit = true;
+            if(ImGui::ColorEdit3("Angle 4 Color", m_square_angle4_color)) square_edit = true;
 
         }
 
         if(ImGui::CollapsingHeader("Square Positions")) {
 
-            ImGui::DragFloat3("Angle 1 Position", m_square_angle1_position, 0.005f, -1.0f, 1.0f);
-            ImGui::DragFloat3("Angle 2 Position", m_square_angle2_position, 0.005f, -1.0f, 1.0f);
-            ImGui::DragFloat3("Angle 3 Position", m_square_angle3_position, 0.005f, -1.0f, 1.0f);
-            ImGui::DragFloat3("Angle 4 Position", m_square_angle4_position, 0.005f, -1.0f, 1.0f);
+            if(ImGui::DragFloat3("Angle 1 Position", m_square_angle1_position, 0.005f, -1.0f, 1.0f)) square_edit = true;
+            if(ImGui::DragFloat3("Angle 2 Position", m_square_angle2_position, 0.005f, -1.0f, 1.0f)) square_edit = true;
+            if(ImGui::DragFloat3("Angle 3 Position", m_square_angle3_position, 0.005f, -1.0f, 1.0f)) square_edit = true;
+            if(ImGui::DragFloat3("Angle 4 Position", m_square_angle4_position, 0.005f, -1.0f, 1.0f)) square_edit = true;
 
         }
-        
+
         ImGui::End();
+
+        if(square_edit) {
+
+            square_edit = false;
+
+            GLfloat square_data[] = {
+
+                m_square_angle1_position[0], m_square_angle1_position[1], m_square_angle1_position[2], m_square_angle1_color[0], m_square_angle1_color[1], m_square_angle1_color[2],
+                m_square_angle2_position[0], m_square_angle2_position[1], m_square_angle2_position[2], m_square_angle2_color[0], m_square_angle2_color[1], m_square_angle2_color[2],
+                m_square_angle3_position[0], m_square_angle3_position[1], m_square_angle3_position[2], m_square_angle3_color[0], m_square_angle3_color[1], m_square_angle3_color[2],
+                m_square_angle4_position[0], m_square_angle4_position[1], m_square_angle4_position[2], m_square_angle4_color[0], m_square_angle4_color[1], m_square_angle4_color[2]
+
+            };
+
+            GLuint indices[] = { 0, 1, 2, 3, 2, 1 };
+
+            BufferLayout buffer_layout_2vec3{
+
+                ShaderDataType::Float3,
+                ShaderDataType::Float3
+
+            };
+
+            p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
+            p_vao = std::make_unique<VertexArray>();
+            p_positions_colors_vbo = std::make_unique<VertexBuffer>(square_data, sizeof(square_data), buffer_layout_2vec3);
+            p_index_buffer = std::make_unique<IndexBuffer>(indices, sizeof(indices) / sizeof(GLuint));
+            p_vao->add_vertex_buffer(*p_positions_colors_vbo);
+            p_vao->set_index_buffer(*p_index_buffer);
+
+        }
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -50,6 +50,7 @@ namespace TheExplosion {
 		float m_square_angle2_position[3] = {  0.5f, -0.5f, 0.0f };
 		float m_square_angle3_position[3] = { -0.5f,  0.5f, 0.0f };
 		float m_square_angle4_position[3] = {  0.5f,  0.5f, 0.0f };
+		bool square_edit = false;
 
 	};
 
