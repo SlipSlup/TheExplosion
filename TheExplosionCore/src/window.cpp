@@ -15,7 +15,7 @@ namespace TheExplosion {
 
     static bool s_GLFW_initialized = false;
 
-    const char* vertex_shader = "#version 460\n"
+    const char* vertex_shader = "#version 330\n"
                                 " "
                                 "layout(location = 0) in vec3 vertex_position;"
                                 "layout(location = 1) in vec3 vertex_color;"
@@ -28,7 +28,7 @@ namespace TheExplosion {
                                 " "
                                 "}";
 
-    const char* fragment_shader =   "#version 460\n"
+    const char* fragment_shader =   "#version 330\n"
                                     " "
                                     "in vec3 color;"
                                     "out vec4 frag_color;"
