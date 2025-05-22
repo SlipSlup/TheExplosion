@@ -1,6 +1,7 @@
 
 #include "shader_program.hpp"
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace TheExplosion {
 
@@ -52,5 +53,7 @@ namespace TheExplosion {
 		shaderProgram.m_id = 0;
 
 	}
+
+	void ShaderProgram::setMatrix4(const char* name, const glm::mat4& matrix) const { glUniformMatrix4fv(glGetUniformLocation(m_id, name), 1, GL_FALSE, glm::value_ptr(matrix)); }
 
 }

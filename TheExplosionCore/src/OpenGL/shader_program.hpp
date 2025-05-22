@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <glm/mat4x4.hpp>
+
 namespace TheExplosion {
 
 	class ShaderProgram {
@@ -16,6 +18,7 @@ namespace TheExplosion {
 		ShaderProgram& operator = (const ShaderProgram&) = delete;
 		void bind() const;
 		static void unbind();
+		void setMatrix4(const char* name, const glm::mat4& matrix) const;
 
 	private:
 
