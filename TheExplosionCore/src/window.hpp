@@ -14,7 +14,15 @@ namespace TheExplosion {
 	public:
 
 		using EventCallbackFn = std::function<void(BaseEvent&)>;
-		Window(std::string title, const unsigned int width, const unsigned int height);
+
+		Window(
+			
+			std::string title,
+			const unsigned int width,
+			const unsigned int height
+		
+		);
+
 		~Window();
 		Window(const Window&) = delete;
 		Window(Window&&) = delete;

@@ -20,22 +20,35 @@ namespace TheExplosion {
 
     GLfloat square_data[] = {
 
-        -0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.5f,
-        -0.5f,  0.5f, 0.0f, 0.5f, 0.0f, 0.5f,
-         0.5f,  0.5f, 0.0f, 0.5f, 0.0f, 0.0f
+        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 0.0f, 0.5f, 0.5f,
+         0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.5f, 0.0f, 0.5f,
+         0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f
 
     };
 
-    GLuint square_indices[] = { 0, 1, 2, 3, 2, 1 };
+    GLuint square_indices[] = {
+        
+        0, 1, 2, 3, 2, 1,
+        2, 3, 6, 7, 6, 3,
+        1, 0, 5, 4, 5, 0,
+        5, 4, 7, 6, 7, 4,
+        1, 5, 3, 7, 3, 5,
+        4, 0, 6, 2, 6, 0
+    
+    };
 
     float square_scale[3] = { 1.0f, 1.0f, 1.0f };
-    float square_rotation = 0.0f;
+    float square_rotation[3] = { 0.0f, 0.0f, 0.0f };
     float square_translation[3] = { 0.0f, 0.0f, 0.0f };
 
-    float camera_position[3] = { 0.0f, 0.0f, 1.0f };
+    float camera_position[3] = { 0.0f, 0.0f, 2.0f };
     float camera_rotation[3] = { 0.0f, 0.0f, 0.0f };
-    bool perspective_camera = true;
+
     Camera camera;
 
     const char* vertex_shader = R"(
@@ -77,13 +90,31 @@ namespace TheExplosion {
     std::unique_ptr<IndexBuffer> p_index_buffer;
     std::unique_ptr<VertexArray> p_vao;
 
-    Window::Window(std::string title, const unsigned int width, const unsigned int height) : m_data({ std::move(title), width, height }) {
+    Window::Window(
+        
+        std::string title,
+        const unsigned int width,
+        const unsigned int height
+    
+    ) : m_data({ 
+        
+        std::move(title),
+        width,
+        height
+        
+    }) {
         
         int resultCode = init();
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGui_ImplOpenGL3_Init();
-        ImGui_ImplGlfw_InitForOpenGL(m_pWindow, true);
+
+        ImGui_ImplGlfw_InitForOpenGL(
+            
+            m_pWindow,
+            true
+        
+        );
     
     }
 
@@ -92,11 +123,33 @@ namespace TheExplosion {
 	int Window::init() {
 
         glfwInit();
-        glfwWindowHint(GLFW_DECORATED, false);
-        m_pWindow = glfwCreateWindow(m_data.width, m_data.height, m_data.title.c_str(), nullptr, nullptr);
+
+        glfwWindowHint(
+            
+            GLFW_DECORATED,
+            false
+        
+        );
+
+        m_pWindow = glfwCreateWindow(
+            
+            m_data.width,
+            m_data.height,
+            m_data.title.c_str(),
+            nullptr,
+            nullptr
+        
+        );
+
         glfwMakeContextCurrent(m_pWindow);
         gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        glfwSetWindowUserPointer(m_pWindow, &m_data);
+
+        glfwSetWindowUserPointer(
+            
+            m_pWindow,
+            &m_data
+        
+        );
 
         glfwSetWindowCloseCallback(
         
@@ -116,7 +169,20 @@ namespace TheExplosion {
 
             m_pWindow,
 
-            [](GLFWwindow* pWindow, int width, int height) { glViewport(0, 0, width, height); }
+            [](
+                
+                GLFWwindow* pWindow,
+                int width,
+                int height
+                
+            ) { glViewport(
+                
+                0,
+                0,
+                width,
+                height
+            
+            ); }
 
         );
 
@@ -127,10 +193,30 @@ namespace TheExplosion {
 
         };
 
-        p_shader_program = std::make_unique<ShaderProgram>(vertex_shader, fragment_shader);
+        p_shader_program = std::make_unique<ShaderProgram>(
+            
+            vertex_shader,
+            fragment_shader
+        
+        );
+
         p_vao = std::make_unique<VertexArray>();
-        p_positions_colors_vbo = std::make_unique<VertexBuffer>(square_data, sizeof(square_data), buffer_layout_2vec3);
-        p_index_buffer = std::make_unique<IndexBuffer>(square_indices, sizeof(square_indices) / sizeof(GLuint));
+
+        p_positions_colors_vbo = std::make_unique<VertexBuffer>(
+            
+            square_data,
+            sizeof(square_data),
+            buffer_layout_2vec3
+        
+        );
+
+        p_index_buffer = std::make_unique<IndexBuffer>(
+            
+            square_indices,
+            sizeof(square_indices) / sizeof(GLuint)
+        
+        );
+
         p_vao->add_vertex_buffer(*p_positions_colors_vbo);
         p_vao->set_index_buffer(*p_index_buffer);
 
@@ -156,14 +242,36 @@ namespace TheExplosion {
 
         );
 
-        float square_rotation_in_radians = glm::radians(square_rotation);
+        float square_rotation_in_radians_x = glm::radians(square_rotation[0]);
 
-        glm::mat4 square_rotation_matrix(
+        glm::mat4 square_rotation_matrix_x(
 
-             cos(square_rotation_in_radians), sin(square_rotation_in_radians), 0, 0,
-            -sin(square_rotation_in_radians), cos(square_rotation_in_radians), 0, 0,
-             0,                               0,                               1, 0,
-             0,                               0,                               0, 1
+            1,  0,                                 0,                                 0,
+            0,  cos(square_rotation_in_radians_x), sin(square_rotation_in_radians_x), 0,
+            0, -sin(square_rotation_in_radians_x), cos(square_rotation_in_radians_x), 0,
+            0,  0,                                 0,                                 1
+
+        );
+
+        float square_rotation_in_radians_y = glm::radians(square_rotation[1]);
+
+        glm::mat4 square_rotation_matrix_y(
+
+            cos(square_rotation_in_radians_y), 0, -sin(square_rotation_in_radians_y), 0,
+            0,                                 1,  0,                                 0,
+            sin(square_rotation_in_radians_y), 0,  cos(square_rotation_in_radians_y), 0,
+            0,                                 0,  0,                                 1
+
+        );
+
+        float square_rotation_in_radians_z = glm::radians(square_rotation[2]);
+
+        glm::mat4 square_rotation_matrix_z(
+
+             cos(square_rotation_in_radians_z), sin(square_rotation_in_radians_z), 0, 0,
+            -sin(square_rotation_in_radians_z), cos(square_rotation_in_radians_z), 0, 0,
+             0,                                 0,                                 1, 0,
+             0,                                 0,                                 0, 1
 
         );
 
@@ -176,9 +284,17 @@ namespace TheExplosion {
 
         );
 
-        glm::mat4 square_model_matrix = square_translation_matrix * square_rotation_matrix * square_scale_matrix;
+        glm::mat4 square_model_matrix = square_translation_matrix * square_rotation_matrix_z * square_rotation_matrix_y * square_rotation_matrix_x * square_scale_matrix;
         
-        glClearColor(m_background_color[0], m_background_color[1], m_background_color[2], 1);
+        glClearColor(
+            
+            m_background_color[0],
+            m_background_color[1],
+            m_background_color[2],
+            1
+        
+        );
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_NewFrame();
@@ -186,33 +302,125 @@ namespace TheExplosion {
         ImGui::NewFrame();
 
         p_shader_program->bind();
-        p_shader_program->setMatrix4("model_matrix", square_model_matrix);
 
-        camera.set_position_rotation(
-        
-            glm::vec3(camera_position[0], camera_position[1], camera_position[2]),
-            glm::vec3(camera_rotation[0], camera_rotation[1], camera_rotation[2])
+        p_shader_program->setMatrix4(
+            
+            "model_matrix",
+            square_model_matrix
         
         );
 
-        camera.set_projection_mode(perspective_camera ? Camera::ProjectionMode::Perspective : Camera::ProjectionMode::Orthographic);
-        p_shader_program->setMatrix4("view_projection_matrix", camera.get_projection_matrix() * camera.get_view_matrix());
+        camera.set_position_rotation(
+        
+            glm::vec3(
+                
+                camera_position[0],
+                camera_position[1],
+                camera_position[2]
+            
+            ),
+
+            glm::vec3(
+                
+                camera_rotation[0],
+                camera_rotation[1],
+                camera_rotation[2]
+            
+            )
+        
+        );
+
+        p_shader_program->setMatrix4(
+            
+            "view_projection_matrix",
+            camera.get_projection_matrix() * camera.get_view_matrix()
+        
+        );
 
         p_vao->bind();
 
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(p_vao->get_indices_count()), GL_UNSIGNED_INT, nullptr);
+        glDrawElements(
+            
+            GL_TRIANGLES,
+            static_cast<GLsizei>(p_vao->get_indices_count()),
+            GL_UNSIGNED_INT,
+            nullptr
+        
+        );
 
         if(ImGui::IsKeyPressed(ImGuiKey_Escape)) leave = !leave;
 
         if(leave) {
 
-            ImGui::SetNextWindowSize(ImVec2(185, 90));
-            ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f), ImGuiCond_Once, ImVec2(0.5f, 0.5f));
-            ImGui::Begin("Exit", (bool*)0, ImGuiWindowFlags_NoDecoration + ImGuiWindowFlags_NoMove);
-            ImGui::SetCursorPos(ImVec2(15, 15));
+            ImGui::SetNextWindowSize(
+                
+                ImVec2(
+                    
+                    185,
+                    90
+                
+                )
+            
+            );
+
+            ImGui::SetNextWindowPos(
+                
+                ImVec2(
+                
+                    ImGui::GetIO().DisplaySize.x * 0.5f,
+                    ImGui::GetIO().DisplaySize.y * 0.5f
+                
+                ),
+                
+                ImGuiCond_Once,
+                
+                ImVec2(
+                    
+                    0.5f,
+                    0.5f
+                
+                )
+            
+            );
+
+            ImGui::Begin(
+                
+                "Exit",
+                (bool*)0,
+                ImGuiWindowFlags_NoDecoration + ImGuiWindowFlags_NoMove
+            
+            );
+
+            ImGui::SetCursorPos(
+                
+                ImVec2(
+                    
+                    15,
+                    15
+                
+                )
+            
+            );
+
             ImGui::Text("Do you want to leave?");
-            ImGui::GetStyle().WindowTitleAlign = ImVec2(0.5, 0.5);
-            ImGui::SetCursorPos(ImVec2(80, 55));
+
+            ImGui::GetStyle().WindowTitleAlign = ImVec2(
+                
+                0.5,
+                0.5
+            
+            );
+
+            ImGui::SetCursorPos(
+                
+                ImVec2(
+                    
+                    80,
+                    55
+                
+                )
+            
+            );
 
             if(ImGui::Button("Yes")) Escape();
 
@@ -222,15 +430,63 @@ namespace TheExplosion {
 
         ImGui::Begin("Menu");
         ImGui::Text("Background");
-        ImGui::ColorEdit3("Background Color", m_background_color);
+
+        ImGui::ColorEdit3(
+            
+            "Background Color",
+            m_background_color
+        
+        );
+
         ImGui::Text("Square");
-        ImGui::SliderFloat3("Square Scale", square_scale, 0.0f, 2.0f);
-        ImGui::SliderFloat("Square Rotation", &square_rotation, 180.0f, 180.0f);
-        ImGui::SliderFloat3("Square Translation", square_translation, -1.0f, 1.0f);
+
+        ImGui::SliderFloat3(
+            
+            "Square Scale",
+            square_scale,
+            0.0f,
+            2.0f
+        
+        );
+
+        ImGui::SliderFloat3(
+            
+            "Square Rotation",
+            square_rotation,
+            -180.0f,
+            180.0f
+        
+        );
+
+        ImGui::SliderFloat3(
+            
+            "Square Translation",
+            square_translation,
+            -1.0f,
+            1.0f
+        
+        );
+
         ImGui::Text("Camera");
-        ImGui::SliderFloat3("Camera Position", camera_position, -10.0f, 10.0f);
-        ImGui::SliderFloat3("Camera Rotation", camera_rotation, -180.0f, 180.0f);
-        ImGui::Checkbox("Perspective Camera", &perspective_camera);
+
+        ImGui::SliderFloat3(
+            
+            "Camera Position",
+            camera_position,
+            -10.0f,
+            10.0f
+        
+        );
+
+        ImGui::SliderFloat3(
+            
+            "Camera Rotation",
+            camera_rotation,
+            -180.0f,
+            180.0f
+        
+        );
+
         ImGui::End();
 
         ImGui::Render();

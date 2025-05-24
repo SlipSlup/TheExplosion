@@ -4,9 +4,27 @@
 
 namespace TheExplosion {
 
-	VertexArray::VertexArray() { glGenVertexArrays(1, &m_id); }
+	VertexArray::VertexArray() {
+		
+		glGenVertexArrays(
+			
+			1,
+			&m_id
+		
+		);
+	
+	}
 
-	VertexArray::~VertexArray() { glDeleteVertexArrays(1, &m_id); }
+	VertexArray::~VertexArray() {
+		
+		glDeleteVertexArrays(
+			
+			1,
+			&m_id
+		
+		);
+	
+	}
 
 	VertexArray& VertexArray::operator = (VertexArray&& vertex_array) noexcept {
 
@@ -18,7 +36,12 @@ namespace TheExplosion {
 
 	}
 
-	VertexArray::VertexArray(VertexArray&& vertex_array) noexcept : m_id(vertex_array.m_id), m_elements_count(vertex_array.m_elements_count) {
+	VertexArray::VertexArray(VertexArray&& vertex_array) noexcept :
+		
+		m_id(vertex_array.m_id),
+		m_elements_count(vertex_array.m_elements_count)
+	
+	{
 
 		vertex_array.m_id = 0;
 		vertex_array.m_elements_count = 0;

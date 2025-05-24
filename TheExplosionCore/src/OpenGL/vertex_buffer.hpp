@@ -70,7 +70,15 @@ namespace TheExplosion {
 
 		};
 
-		VertexBuffer(const void* data, const size_t size, BufferLayout buffer_layout, const EUsage usage = VertexBuffer::EUsage::Static);
+		VertexBuffer(
+			
+			const void* data,
+			const size_t size,
+			BufferLayout buffer_layout,
+			const EUsage usage = VertexBuffer::EUsage::Static
+		
+		);
+
 		~VertexBuffer();
 		VertexBuffer(const VertexBuffer&) = delete;
 		VertexBuffer& operator = (const VertexBuffer&) = delete;

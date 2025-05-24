@@ -5,28 +5,90 @@
 
 namespace TheExplosion {
 
-	bool create_shader(const char* source, const GLenum shader_type, GLuint& shader_id) {
+	bool create_shader(
+		
+		const char* source,
+		const GLenum shader_type,
+		GLuint& shader_id)
+	
+	{
 
 		shader_id = glCreateShader(shader_type);
-		glShaderSource(shader_id, 1, &source, nullptr);
+
+		glShaderSource(
+			
+			shader_id,
+			1,
+			&source,
+			nullptr
+		
+		);
+
 		glCompileShader(shader_id);
 
 		return true;
 
 	}
 
-	ShaderProgram::ShaderProgram(const char* vertex_shader_src, const char* fragment_shader_src) {
+	ShaderProgram::ShaderProgram(
+		
+		const char* vertex_shader_src,
+		const char* fragment_shader_src
+	
+	) {
 
 		GLuint vertex_shader_id = 0;
-		create_shader(vertex_shader_src, GL_VERTEX_SHADER, vertex_shader_id);
+
+		create_shader(
+			
+			vertex_shader_src,
+			GL_VERTEX_SHADER,
+			vertex_shader_id
+		
+		);
+
 		GLuint fragment_shader_id = 0;
-		create_shader(fragment_shader_src, GL_FRAGMENT_SHADER, fragment_shader_id);
+
+		create_shader(
+			
+			fragment_shader_src,
+			GL_FRAGMENT_SHADER,
+			fragment_shader_id
+		
+		);
+
 		m_id = glCreateProgram();
-		glAttachShader(m_id, vertex_shader_id);
-		glAttachShader(m_id, fragment_shader_id);
+
+		glAttachShader(
+			
+			m_id,
+			vertex_shader_id
+		
+		);
+
+		glAttachShader(
+			
+			m_id,
+			fragment_shader_id
+		
+		);
+
 		glLinkProgram(m_id);
-		glDetachShader(m_id, vertex_shader_id);
-		glDetachShader(m_id, fragment_shader_id);
+
+		glDetachShader(
+			
+			m_id,
+			vertex_shader_id
+		
+		);
+
+		glDetachShader(
+			
+			m_id,
+			fragment_shader_id
+		
+		);
+
 		glDeleteShader(vertex_shader_id);
 		glDeleteShader(fragment_shader_id);
 
@@ -54,6 +116,28 @@ namespace TheExplosion {
 
 	}
 
-	void ShaderProgram::setMatrix4(const char* name, const glm::mat4& matrix) const { glUniformMatrix4fv(glGetUniformLocation(m_id, name), 1, GL_FALSE, glm::value_ptr(matrix)); }
+	void ShaderProgram::setMatrix4(
+		
+		const char* name,
+		const glm::mat4& matrix
+	
+	) const {
+		
+		glUniformMatrix4fv(
+			
+			glGetUniformLocation(
+				
+				m_id,
+				name
+			
+			),
+
+			1,
+			GL_FALSE,
+			glm::value_ptr(matrix)
+		
+		);
+	
+	}
 
 }

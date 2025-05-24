@@ -75,17 +75,58 @@ namespace TheExplosion {
 
 	}
 
-	BufferElement::BufferElement(const ShaderDataType _type) : type(_type), component_type(shader_data_type_to_component_type(_type)), components_count(shader_data_type_to_components_count(_type)), size(shader_data_type_size(_type)), offset(0) {}
+	BufferElement::BufferElement(const ShaderDataType _type) :
+		
+		type(_type),
+		component_type(shader_data_type_to_component_type(_type)),
+		components_count(shader_data_type_to_components_count(_type)),
+		size(shader_data_type_size(_type)),
+		offset(0) {}
 
-	VertexBuffer::VertexBuffer(const void* data, const size_t size, BufferLayout buffer_layout, const EUsage usage) : m_buffer_layout(std::move(buffer_layout)) {
+	VertexBuffer::VertexBuffer(
+		
+		const void* data,
+		const size_t size,
+		BufferLayout buffer_layout,
+		const EUsage usage
+	
+	) : m_buffer_layout(std::move(buffer_layout)) {
 
-		glGenBuffers(1, &m_id);
-		glBindBuffer(GL_ARRAY_BUFFER, m_id);
-		glBufferData(GL_ARRAY_BUFFER, size, data, usage_to_GLenum(usage));
+		glGenBuffers(
+			
+			1,
+			&m_id
+		
+		);
+
+		glBindBuffer(
+			
+			GL_ARRAY_BUFFER,
+			m_id
+		
+		);
+
+		glBufferData(
+			
+			GL_ARRAY_BUFFER,
+			size,
+			data,
+			usage_to_GLenum(usage)
+		
+		);
 
 	}
 
-	VertexBuffer::~VertexBuffer() { glDeleteBuffers(1, &m_id); }
+	VertexBuffer::~VertexBuffer() {
+		
+		glDeleteBuffers(
+			
+			1,
+			&m_id
+		
+		);
+	
+	}
 
 	VertexBuffer& VertexBuffer::operator = (VertexBuffer&& vertexBuffer) noexcept {
 
@@ -95,10 +136,33 @@ namespace TheExplosion {
 
 	}
 
-	VertexBuffer::VertexBuffer(VertexBuffer&& vertex_buffer) noexcept : m_id(vertex_buffer.m_id), m_buffer_layout(std::move(vertex_buffer.m_buffer_layout)) { vertex_buffer.m_id = 0; }
+	VertexBuffer::VertexBuffer(VertexBuffer&& vertex_buffer) noexcept :
+		
+		m_id(vertex_buffer.m_id),
+		m_buffer_layout(std::move(vertex_buffer.m_buffer_layout))
+	
+	{ vertex_buffer.m_id = 0; }
 
-	void VertexBuffer::bind() const { glBindBuffer(GL_ARRAY_BUFFER, m_id); }
+	void VertexBuffer::bind() const {
+		
+		glBindBuffer(
+			
+			GL_ARRAY_BUFFER,
+			m_id
+		
+		);
+	
+	}
 
-	void VertexBuffer::unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
+	void VertexBuffer::unbind() {
+		
+		glBindBuffer(
+			
+			GL_ARRAY_BUFFER,
+			0
+		
+		);
+	
+	}
 
 }

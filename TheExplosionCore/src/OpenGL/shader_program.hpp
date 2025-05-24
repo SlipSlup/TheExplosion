@@ -9,7 +9,13 @@ namespace TheExplosion {
 
 	public:
 
-		ShaderProgram(const char* vertex_shader_src, const char* fragment_shader_src);
+		ShaderProgram(
+			
+			const char* vertex_shader_src,
+			const char* fragment_shader_src
+		
+		);
+
 		ShaderProgram(ShaderProgram&&) noexcept;
 		ShaderProgram& operator = (ShaderProgram&&) noexcept;
 		~ShaderProgram();
@@ -18,7 +24,13 @@ namespace TheExplosion {
 		ShaderProgram& operator = (const ShaderProgram&) = delete;
 		void bind() const;
 		static void unbind();
-		void setMatrix4(const char* name, const glm::mat4& matrix) const;
+
+		void setMatrix4(
+			
+			const char* name,
+			const glm::mat4& matrix
+		
+		) const;
 
 	private:
 

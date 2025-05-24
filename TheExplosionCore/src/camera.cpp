@@ -7,14 +7,12 @@ namespace TheExplosion {
 	Camera::Camera(
 
 		const glm::vec3& position,
-		const glm::vec3& rotation,
-		const ProjectionMode projection_mode
+		const glm::vec3& rotation
 
 	) :
 
 		m_position(position),
-		m_rotation(rotation),
-		m_projection_mode(projection_mode)
+		m_rotation(rotation)
 	
 	{
 
@@ -73,69 +71,32 @@ namespace TheExplosion {
 
 	void Camera::update_projection_matrix() {
 
-		if(m_projection_mode == ProjectionMode::Perspective) {
+		float r = 0.1f;
+		float t = 0.1f;
+		float f = 10;
+		float n = 0.1f;
 
-			float r = 0.1f;
-			float t = 0.1f;
-			float f = 10;
-			float n = 0.1f;
+		m_projection_matrix = glm::mat4(
 
-			m_projection_matrix = glm::mat4(
+			n / r, 0,	   0,					 0,
+			0,	   n / t,  0,					 0,
+			0,	   0,	  -(f + n) / (f - n),   -1,
+			0,	   0,	  -2 * f * n / (f - n),  0
 
-				n / r, 0,	   0,					 0,
-				0,	   n / t,  0,					 0,
-				0,	   0,	  -(f + n) / (f - n),   -1,
-				0,	   0,	  -2 * f * n / (f - n),  0
-
-			);
-
-		}
-		else {
-
-			float r = 2;
-			float t = 2;
-			float f = 100;
-			float n = 0.1f;
-
-			m_projection_matrix = glm::mat4(
-
-				1 / r, 0,	   0,				  0,
-				0,	   1 / t,  0,				  0,
-				0,	   0,	  -2 / (f - n),		  0,
-				0,	   0,	  -(f + n) / (f - n), 1
-
-			);
-
-		}
+		);
 
 	}
 
-	void Camera::set_position(const glm::vec3& position) {
-
-		m_position = position;
-		update_view_matrix();
-
-	}
-
-	void Camera::set_rotation(const glm::vec3& rotation) {
-
-		m_rotation = rotation;
-		update_view_matrix();
-
-	}
-
-	void Camera::set_position_rotation(const glm::vec3& position, const glm::vec3& rotation) {
+	void Camera::set_position_rotation(
+		
+		const glm::vec3& position,
+		const glm::vec3& rotation
+	
+	) {
 
 		m_position = position;
 		m_rotation = rotation;
 		update_view_matrix();
-
-	}
-
-	void Camera::set_projection_mode(const ProjectionMode projection_mode) {
-
-		m_projection_mode = projection_mode;
-		update_projection_matrix();
 
 	}
 

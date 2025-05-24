@@ -18,15 +18,49 @@ namespace TheExplosion {
 
 	}
 
-	IndexBuffer::IndexBuffer(const void* data, const size_t count, const VertexBuffer::EUsage usage) : m_count(count) {
+	IndexBuffer::IndexBuffer(
+		
+		const void* data,
+		const size_t count,
+		const VertexBuffer::EUsage usage
+	
+	) : m_count(count) {
 
-		glGenBuffers(1, &m_id);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, usage_to_GLenum(usage));
+		glGenBuffers(
+
+			1,
+			&m_id
+		
+		);
+
+		glBindBuffer(
+			
+			GL_ELEMENT_ARRAY_BUFFER,
+			m_id
+		
+		);
+
+		glBufferData(
+			
+			GL_ELEMENT_ARRAY_BUFFER,
+			count * sizeof(GLuint),
+			data,
+			usage_to_GLenum(usage)
+		
+		);
 
 	}
 
-	IndexBuffer::~IndexBuffer() { glDeleteBuffers(1, &m_id); }
+	IndexBuffer::~IndexBuffer() {
+		
+		glDeleteBuffers(
+			
+			1,
+			&m_id
+		
+		);
+	
+	}
 
 	IndexBuffer& IndexBuffer::operator = (IndexBuffer&& index_buffer) noexcept {
 
@@ -38,15 +72,38 @@ namespace TheExplosion {
 
 	}
 
-	IndexBuffer::IndexBuffer(IndexBuffer&& index_buffer) noexcept : m_id(index_buffer.m_id), m_count(index_buffer.m_count) {
+	IndexBuffer::IndexBuffer(IndexBuffer&& index_buffer) noexcept :
+		
+		m_id(index_buffer.m_id),
+		m_count(index_buffer.m_count)
+	
+	{
 
 		index_buffer.m_id = 0;
 		index_buffer.m_count = 0;
 
 	}
 
-	void IndexBuffer::bind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id); }
+	void IndexBuffer::bind() const {
+		
+		glBindBuffer(
+			
+			GL_ELEMENT_ARRAY_BUFFER,
+			m_id
+		
+		);
+	
+	}
 
-	void IndexBuffer::unbind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
+	void IndexBuffer::unbind() {
+		
+		glBindBuffer(
+			
+			GL_ELEMENT_ARRAY_BUFFER,
+			0
+		
+		);
+	
+	}
 
 }

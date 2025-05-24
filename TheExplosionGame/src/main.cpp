@@ -3,11 +3,7 @@
 #include <application.hpp>
 #include <wtypes.h>
 
-class App : public TheExplosion::Application {
-
-	virtual void on_update() override {}
-
-};
+class App : public TheExplosion::Application { virtual void on_update() override {} };
 
 int GetDesktopWidth() {
 
