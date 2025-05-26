@@ -22,6 +22,7 @@ set(
 	src/OpenGL/vertex_buffer.hpp
 	src/OpenGL/vertex_array.hpp
 	src/OpenGL/index_buffer.hpp
+	src/OpenGL/renderer.hpp
 	
 )
 
@@ -36,6 +37,7 @@ set(
 	src/OpenGL/vertex_array.cpp
 	src/OpenGL/index_buffer.cpp
 	src/camera.cpp
+	src/OpenGL/renderer.cpp
 	
 )
 

@@ -50,15 +50,6 @@ namespace TheExplosion {
 		WindowData m_data;
 		bool leave = false;
 		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
-		float m_square_angle1_color[3] = { 0.5f, 0.5f, 0.0f };
-		float m_square_angle2_color[3] = { 0.0f, 0.5f, 0.5f };
-		float m_square_angle3_color[3] = { 0.5f, 0.0f, 0.5f };
-		float m_square_angle4_color[3] = { 0.5f, 0.0f, 0.0f };
-		float m_square_angle1_position[3] = { -0.5f, -0.5f, 0.0f };
-		float m_square_angle2_position[3] = {  0.5f, -0.5f, 0.0f };
-		float m_square_angle3_position[3] = { -0.5f,  0.5f, 0.0f };
-		float m_square_angle4_position[3] = {  0.5f,  0.5f, 0.0f };
-		bool square_edit = false;
 
 	};
 

@@ -13,42 +13,39 @@
 #include <glm/mat3x3.hpp>
 #include <glm/trigonometric.hpp>
 #include "camera.hpp"
+#include "OpenGL/renderer.hpp"
 
 namespace TheExplosion {
-
-    static bool s_GLFW_initialized = false;
 
     GLfloat square_data[] = {
 
         -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 0.5f, 0.5f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.5f, 0.0f, 0.5f,
-         0.5f, -0.5f, -0.5f, 0.5f, 0.5f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f
+         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f
 
     };
 
     GLuint square_indices[] = {
         
-        0, 1, 2, 3, 2, 1,
-        2, 3, 6, 7, 6, 3,
-        1, 0, 5, 4, 5, 0,
-        5, 4, 7, 6, 7, 4,
-        1, 5, 3, 7, 3, 5,
-        4, 0, 6, 2, 6, 0
+        0, 1, 3, 2, 3, 1,
+        3, 2, 4, 5, 4, 2,
+        3, 4, 0, 7, 0, 4,
+        7, 4, 6, 5, 6, 4,
+        7, 6, 0, 1, 0, 6,
+        1, 6, 2, 5, 2, 6
     
     };
 
     float square_scale[3] = { 1.0f, 1.0f, 1.0f };
     float square_rotation[3] = { 0.0f, 0.0f, 0.0f };
     float square_translation[3] = { 0.0f, 0.0f, 0.0f };
-
     float camera_position[3] = { 0.0f, 0.0f, 2.0f };
     float camera_rotation[3] = { 0.0f, 0.0f, 0.0f };
-
     Camera camera;
 
     const char* vertex_shader = R"(
@@ -141,8 +138,7 @@ namespace TheExplosion {
         
         );
 
-        glfwMakeContextCurrent(m_pWindow);
-        gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        Renderer::init(m_pWindow);
 
         glfwSetWindowUserPointer(
             
@@ -175,14 +171,16 @@ namespace TheExplosion {
                 int width,
                 int height
                 
-            ) { glViewport(
+            ) {
+                    
+                Renderer::set_viewport(
                 
-                0,
-                0,
-                width,
-                height
+                    width,
+                    height
+                
+                );
             
-            ); }
+            }
 
         );
 
@@ -225,7 +223,7 @@ namespace TheExplosion {
 	}
 
 	void Window::shutdown() {
-
+        
         glfwDestroyWindow(m_pWindow);
         glfwTerminate();
 
@@ -286,7 +284,7 @@ namespace TheExplosion {
 
         glm::mat4 square_model_matrix = square_translation_matrix * square_rotation_matrix_z * square_rotation_matrix_y * square_rotation_matrix_x * square_scale_matrix;
         
-        glClearColor(
+        Renderer::set_clear_color(
             
             m_background_color[0],
             m_background_color[1],
@@ -295,12 +293,7 @@ namespace TheExplosion {
         
         );
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
+        Renderer::clear();
         p_shader_program->bind();
 
         p_shader_program->setMatrix4(
@@ -337,16 +330,11 @@ namespace TheExplosion {
         
         );
 
-        p_vao->bind();
+        Renderer::draw(*p_vao);
 
-        glDrawElements(
-            
-            GL_TRIANGLES,
-            static_cast<GLsizei>(p_vao->get_indices_count()),
-            GL_UNSIGNED_INT,
-            nullptr
-        
-        );
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
         if(ImGui::IsKeyPressed(ImGuiKey_Escape)) leave = !leave;
 
@@ -488,10 +476,8 @@ namespace TheExplosion {
         );
 
         ImGui::End();
-
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(m_pWindow);
         glfwPollEvents();
 
