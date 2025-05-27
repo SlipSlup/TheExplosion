@@ -48,7 +48,6 @@ namespace TheExplosion {
 		void shutdown();
 		GLFWwindow* m_pWindow = nullptr;
 		WindowData m_data;
-		bool leave = false;
 		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
 
 	};

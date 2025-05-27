@@ -14,6 +14,7 @@
 #include <glm/trigonometric.hpp>
 #include "camera.hpp"
 #include "OpenGL/renderer.hpp"
+#include <wtypes.h>
 
 namespace TheExplosion {
 
@@ -122,10 +123,10 @@ namespace TheExplosion {
         glfwInit();
 
         glfwWindowHint(
-            
-            GLFW_DECORATED,
-            false
-        
+
+            GLFW_MAXIMIZED,
+            true
+
         );
 
         m_pWindow = glfwCreateWindow(
@@ -335,87 +336,6 @@ namespace TheExplosion {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
-        if(ImGui::IsKeyPressed(ImGuiKey_Escape)) leave = !leave;
-
-        if(leave) {
-
-            ImGui::SetNextWindowSize(
-                
-                ImVec2(
-                    
-                    185,
-                    90
-                
-                )
-            
-            );
-
-            ImGui::SetNextWindowPos(
-                
-                ImVec2(
-                
-                    ImGui::GetIO().DisplaySize.x * 0.5f,
-                    ImGui::GetIO().DisplaySize.y * 0.5f
-                
-                ),
-                
-                ImGuiCond_Once,
-                
-                ImVec2(
-                    
-                    0.5f,
-                    0.5f
-                
-                )
-            
-            );
-
-            ImGui::Begin(
-                
-                "Exit",
-                (bool*)0,
-                ImGuiWindowFlags_NoDecoration + ImGuiWindowFlags_NoMove
-            
-            );
-
-            ImGui::SetCursorPos(
-                
-                ImVec2(
-                    
-                    15,
-                    15
-                
-                )
-            
-            );
-
-            ImGui::Text("Do you want to leave?");
-
-            ImGui::GetStyle().WindowTitleAlign = ImVec2(
-                
-                0.5,
-                0.5
-            
-            );
-
-            ImGui::SetCursorPos(
-                
-                ImVec2(
-                    
-                    80,
-                    55
-                
-                )
-            
-            );
-
-            if(ImGui::Button("Yes")) Escape();
-
-            ImGui::End();
-
-        }
-
         ImGui::Begin("Menu");
         ImGui::Text("Background");
 

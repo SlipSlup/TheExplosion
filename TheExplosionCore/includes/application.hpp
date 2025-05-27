@@ -31,9 +31,8 @@ namespace TheExplosion {
 
 		std::unique_ptr<class Window> m_pWindow;
 		EventDispatcher m_event_dispatcher;
+		bool m_bCloseWindow = false;
 
 	};
-
-	void Escape();
 
 }

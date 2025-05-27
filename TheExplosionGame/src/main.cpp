@@ -1,9 +1,8 @@
 
-#include <memory>
 #include <application.hpp>
 #include <wtypes.h>
 
-class App : public TheExplosion::Application { virtual void on_update() override {} };
+class TheExplosionGame : public TheExplosion::Application { virtual void on_update() override {} };
 
 int GetDesktopWidth() {
 
@@ -25,7 +24,7 @@ int GetDesktopHeight() {
 
 int main() {
 
-    auto app = std::make_unique<App>();
-	int returnCode = app->start(GetDesktopWidth() - 2, GetDesktopHeight() - 2, "TheExplosion");
+    auto app = std::make_unique<TheExplosionGame>();
+	int returnCode = app->start(GetDesktopWidth(), GetDesktopHeight(), "TheExplosion");
 
 }

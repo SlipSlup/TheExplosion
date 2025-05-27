@@ -4,13 +4,9 @@
 #include <windows.h>
 
 namespace TheExplosion {
-
-	bool m_bCloseWindow = false;
 	
 	Application::Application() {}
 	Application::~Application() {}
-
-	void Escape() { m_bCloseWindow = true; }
 
 	int Application::start(
 		
