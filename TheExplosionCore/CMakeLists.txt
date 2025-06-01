@@ -10,6 +10,7 @@ set(
 	includes/application.hpp
 	includes/event.hpp
 	includes/camera.hpp
+	includes/keys.hpp
 	
 )
 
@@ -18,11 +19,12 @@ set(
 	CORE_PRIVATE_INCLUDES
 	
 	src/window.hpp
-	src/OpenGL/shader_program.hpp
-	src/OpenGL/vertex_buffer.hpp
-	src/OpenGL/vertex_array.hpp
-	src/OpenGL/index_buffer.hpp
-	src/OpenGL/renderer.hpp
+	src/shader_program.hpp
+	src/vertex_buffer.hpp
+	src/vertex_array.hpp
+	src/index_buffer.hpp
+	src/renderer.hpp
+	src/UI.hpp
 	
 )
 
@@ -32,12 +34,13 @@ set(
 	
 	src/application.cpp
 	src/window.cpp
-	src/OpenGL/shader_program.cpp
-	src/OpenGL/vertex_buffer.cpp
-	src/OpenGL/vertex_array.cpp
-	src/OpenGL/index_buffer.cpp
+	src/shader_program.cpp
+	src/vertex_buffer.cpp
+	src/vertex_array.cpp
+	src/index_buffer.cpp
 	src/camera.cpp
-	src/OpenGL/renderer.cpp
+	src/renderer.cpp
+	src/UI.cpp
 	
 )
 

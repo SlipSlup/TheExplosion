@@ -3,12 +3,15 @@
 
 #include <functional>
 #include <array>
+#include "keys.hpp"
 
 namespace TheExplosion {
 	
 	enum class EventType {
 
 		WindowClose = 0,
+		KeyPressed,
+		KeyReleased,
 		EventsCount
 
 	};
@@ -48,6 +51,31 @@ namespace TheExplosion {
 
 		virtual EventType get_type() const override { return type; }
 		static const EventType type = EventType::WindowClose;
+
+	};
+
+	struct EventKeyPressed : public BaseEvent {
+
+		EventKeyPressed(const KeyCode key_code, const bool repeated) :
+
+			key_code(key_code),
+			repeated(repeated)
+
+		{}
+
+		KeyCode key_code;
+		bool repeated;
+		virtual EventType get_type() const override { return type; }
+		static const EventType type = EventType::KeyPressed;
+
+	};
+
+	struct EventKeyReleased : public BaseEvent {
+
+		EventKeyReleased(const KeyCode key_code) : key_code(key_code) {}
+		KeyCode key_code;
+		virtual EventType get_type() const override { return type; }
+		static const EventType type = EventType::KeyReleased;
 
 	};
 

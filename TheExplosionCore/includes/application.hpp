@@ -2,6 +2,7 @@
 #pragma once
 
 #include "event.hpp"
+#include "camera.hpp"
 #include <memory>
 
 namespace TheExplosion {
@@ -16,16 +17,16 @@ namespace TheExplosion {
 		Application(Application&&) = delete;
 		Application& operator = (const Application&) = delete;
 		Application& operator = (Application&&) = delete;
-
-		virtual int start(
-			
-			unsigned int window_width,
-			unsigned int window_height,
-			const char* title
-		
-		);
-
+		virtual int start(const char* title);
 		virtual void on_update() {}
+		virtual void on_ui_draw() {}
+		float camera_position[3] = { 0.0f, 0.0f, 2.0f };
+		float camera_rotation[3] = { 0.0f, 0.0f, 0.0f };
+		float square_scale[3] = { 1.0f, 1.0f, 1.0f };
+		float square_rotation[3] = { 0.0f, 0.0f, 0.0f };
+		float square_translation[3] = { 0.0f, 0.0f, 0.0f };
+		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
+		Camera camera;
 
 	private:
 

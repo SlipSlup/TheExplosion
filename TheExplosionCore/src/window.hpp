@@ -3,7 +3,6 @@
 
 #include "event.hpp"
 #include <string>
-#include <functional>
 
 struct GLFWwindow;
 
@@ -48,7 +47,6 @@ namespace TheExplosion {
 		void shutdown();
 		GLFWwindow* m_pWindow = nullptr;
 		WindowData m_data;
-		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
 
 	};
 

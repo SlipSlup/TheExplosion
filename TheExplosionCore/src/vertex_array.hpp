@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "vertex_buffer.hpp"
 #include "index_buffer.hpp"
 
 namespace TheExplosion {
