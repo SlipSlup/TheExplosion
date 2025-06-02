@@ -20,10 +20,6 @@ class TheExplosionGame : public TheExplosion::Application {
         if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_S)) { movement_delta.x -= camera_translation_speed * deltaTime; }
         if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_A)) { movement_delta.y -= camera_translation_speed * deltaTime; }
         if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_D)) { movement_delta.y += camera_translation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_UP)) { rotation_delta.y -= camera_rotation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_DOWN)) { rotation_delta.y += camera_rotation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_LEFT)) { rotation_delta.z += camera_rotation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_RIGHT)) { rotation_delta.z -= camera_rotation_speed * deltaTime; }
 
         if(get_current_cursor_position().x > get_window_width() / 2) rotation_delta.z -= get_current_cursor_position().x * camera_rotation_speed * deltaTime;
         if(get_current_cursor_position().x < get_window_width() / 2) rotation_delta.z += get_current_cursor_position().x * camera_rotation_speed * deltaTime;
