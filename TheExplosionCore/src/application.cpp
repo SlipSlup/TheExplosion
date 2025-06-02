@@ -11,18 +11,21 @@
 #include <glm/trigonometric.hpp>
 #include "UI.hpp"
 #include <imgui/imgui.h>
+#include "input.hpp"
 
 namespace TheExplosion {
 
+    float lastFrame = 0.0f;
+
     GLfloat square_data[] = {
 
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
          0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
         -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f
 
     };
@@ -89,20 +92,17 @@ namespace TheExplosion {
 		
 		);
 
-		RECT desktop;
-		GetWindowRect(GetDesktopWindow(), &desktop);
-
 		m_pWindow = std::make_unique<Window>(
 			
 			title,
-			desktop.right,
-			desktop.bottom
+            Application::get_window_width(),
+            Application::get_window_height()
 		
 		);
 
 		m_event_dispatcher.add_event_listener<EventWindowClose>([&](EventWindowClose& event) { m_bCloseWindow = true; });
-        m_event_dispatcher.add_event_listener<EventKeyPressed>([&](EventKeyPressed& event) {});
-        m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) {});
+        m_event_dispatcher.add_event_listener<EventKeyPressed>([&](EventKeyPressed& event) { Input::PressKey(event.key_code); });
+        m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) { Input::ReleaseKey(event.key_code); });
 		m_pWindow->set_event_callback([&](BaseEvent& event) { m_event_dispatcher.dispatch(event); });
 
         BufferLayout buffer_layout_2vec3{
@@ -193,27 +193,7 @@ namespace TheExplosion {
             );
 
             glm::mat4 square_model_matrix = square_translation_matrix * square_rotation_matrix_z * square_rotation_matrix_y * square_rotation_matrix_x * square_scale_matrix;
-
-            camera.set_position_rotation(
-
-                glm::vec3(
-
-                    camera_position[0],
-                    camera_position[1],
-                    camera_position[2]
-
-                ),
-
-                glm::vec3(
-
-                    camera_rotation[0],
-                    camera_rotation[1],
-                    camera_rotation[2]
-
-                )
-
-            );
-
+            
             p_shader_program->bind();
 
             p_shader_program->setMatrix4(
@@ -239,6 +219,9 @@ namespace TheExplosion {
 
             );
 
+            float currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
             Renderer::clear();
             Renderer::draw(*p_vao);
             UI::on_ui_draw_begin();
@@ -254,5 +237,25 @@ namespace TheExplosion {
 		return 0;
 	
 	}
+
+    glm::vec2 Application::get_current_cursor_position() const { return m_pWindow->get_current_cursor_position(); }
+
+    int Application::get_window_width() {
+
+        RECT desktop;
+        GetWindowRect(GetDesktopWindow(), &desktop);
+
+        return desktop.right;
+
+    }
+
+    int Application::get_window_height() {
+
+        RECT desktop;
+        GetWindowRect(GetDesktopWindow(), &desktop);
+
+        return desktop.bottom;
+
+    }
 
 }

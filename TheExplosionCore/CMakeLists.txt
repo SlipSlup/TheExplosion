@@ -11,6 +11,7 @@ set(
 	includes/event.hpp
 	includes/camera.hpp
 	includes/keys.hpp
+	includes/input.hpp
 	
 )
 
@@ -41,6 +42,7 @@ set(
 	src/camera.cpp
 	src/renderer.cpp
 	src/UI.cpp
+	src/input.cpp
 	
 )
 

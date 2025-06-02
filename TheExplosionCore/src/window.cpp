@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "UI.hpp"
 #include "renderer.hpp"
+#include <windows.h>
 
 namespace TheExplosion {
 
@@ -44,6 +45,7 @@ namespace TheExplosion {
         );
 
         Renderer::init(m_pWindow);
+        glfwSwapInterval(0);
 
         glfwSetWindowUserPointer(
             
@@ -160,5 +162,15 @@ namespace TheExplosion {
         glfwPollEvents();
 
 	}
+
+    glm::vec2 Window::get_current_cursor_position() const {
+
+        double x_pos;
+        double y_pos;
+        glfwGetCursorPos(m_pWindow, &x_pos, &y_pos);
+
+        return { x_pos, y_pos };
+
+    }
 
 }
