@@ -29,6 +29,7 @@ namespace TheExplosion {
 		glm::vec2 get_current_cursor_position() const;
 		int get_window_width();
 		int get_window_height();
+		void set_cursor_in_center();
 
 	private:
 

@@ -7,7 +7,7 @@
 class TheExplosionGame : public TheExplosion::Application {
 
     float camera_translation_speed = 1.0f;
-    float camera_rotation_speed = 100.0f;
+    float camera_rotation_speed = 4.5f;
     float camera_position[3] = { 0.0f, 0.0f, 0.0f };
     float camera_rotation[3] = { 0.0f, 0.0f, 0.0f };
 	
@@ -25,7 +25,13 @@ class TheExplosionGame : public TheExplosion::Application {
         if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_LEFT)) { rotation_delta.z += camera_rotation_speed * deltaTime; }
         if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_RIGHT)) { rotation_delta.z -= camera_rotation_speed * deltaTime; }
 
+        if(get_current_cursor_position().x > get_window_width() / 2) rotation_delta.z -= get_current_cursor_position().x * camera_rotation_speed * deltaTime;
+        if(get_current_cursor_position().x < get_window_width() / 2) rotation_delta.z += get_current_cursor_position().x * camera_rotation_speed * deltaTime;
+        if(get_current_cursor_position().y > get_window_height() / 2) rotation_delta.y += get_current_cursor_position().y * camera_rotation_speed * deltaTime;
+        if(get_current_cursor_position().y < get_window_height() / 2) rotation_delta.y -= get_current_cursor_position().y * camera_rotation_speed * deltaTime;
+
         camera.add_movement_rotation(movement_delta, rotation_delta);
+        set_cursor_in_center();
     
     }
 

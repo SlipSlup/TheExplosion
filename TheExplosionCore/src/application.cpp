@@ -258,4 +258,6 @@ namespace TheExplosion {
 
     }
 
+    void Application::set_cursor_in_center() { m_pWindow->set_cursor_in_center(); }
+
 }

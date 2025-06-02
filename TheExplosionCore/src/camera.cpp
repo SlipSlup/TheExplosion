@@ -115,6 +115,8 @@ namespace TheExplosion {
 		m_position += m_right * movement_delta.y;
 		m_position += m_up * movement_delta.z;
 		m_rotation += rotation_delta;
+		if(m_rotation.y < -90) m_rotation.y = -90;
+		if(m_rotation.y > 90) m_rotation.y = 90;
 		m_update_view_matrix = true;
 
 	}

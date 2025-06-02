@@ -33,6 +33,7 @@ namespace TheExplosion {
 		unsigned int get_height() const { return m_data.height; }
 		void set_event_callback(const EventCallbackFn& callback) { m_data.eventCallbackFn = callback; }
 		glm::vec2 get_current_cursor_position() const;
+		void set_cursor_in_center();
 
 	private:
 
