@@ -18,6 +18,7 @@ namespace TheExplosion {
 		Application& operator = (const Application&) = delete;
 		Application& operator = (Application&&) = delete;
 		virtual int start(const char* title);
+		virtual void on_start() {}
 		virtual void on_update() {}
 		virtual void on_ui_draw() {}
 		float square_scale[3] = { 1.0f, 1.0f, 1.0f };
@@ -25,11 +26,10 @@ namespace TheExplosion {
 		float square_translation[3] = { 0.0f, 0.0f, 0.0f };
 		float m_background_color[3] = { 0.0f, 0.0f, 0.0f };
 		Camera camera{ glm::vec3(-2.0f, 0.0f, 0.0f) };
-		float deltaTime = 0.0f;
+		double deltaTime = 0.0f;
 		glm::vec2 get_current_cursor_position() const;
 		int get_window_width();
 		int get_window_height();
-		void set_cursor_in_center();
 
 	private:
 

@@ -139,6 +139,8 @@ namespace TheExplosion {
         p_vao->add_vertex_buffer(*p_positions_colors_vbo);
         p_vao->set_index_buffer(*p_index_buffer);
 
+        on_start();
+
 		while(!m_bCloseWindow) {
 
             glm::mat4 square_scale_matrix(
@@ -219,7 +221,7 @@ namespace TheExplosion {
 
             );
 
-            float currentFrame = glfwGetTime();
+            double currentFrame = glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
             Renderer::clear();
@@ -257,7 +259,5 @@ namespace TheExplosion {
         return desktop.bottom;
 
     }
-
-    void Application::set_cursor_in_center() { m_pWindow->set_cursor_in_center(); }
 
 }

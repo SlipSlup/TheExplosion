@@ -46,7 +46,18 @@ namespace TheExplosion {
 
         Renderer::init(m_pWindow);
         glfwSwapInterval(0);
-        set_cursor_in_center();
+
+        glfwSetInputMode(
+            
+            m_pWindow,
+            GLFW_CURSOR,
+            GLFW_CURSOR_DISABLED
+        
+        );
+
+        RECT desktop;
+        GetWindowRect(GetDesktopWindow(), &desktop);
+        glfwSetCursorPos(m_pWindow, desktop.right / 2, desktop.bottom / 2);
 
         glfwSetWindowUserPointer(
             
@@ -171,14 +182,6 @@ namespace TheExplosion {
         glfwGetCursorPos(m_pWindow, &x_pos, &y_pos);
 
         return { x_pos, y_pos };
-
-    }
-
-    void Window::set_cursor_in_center() {
-
-        RECT desktop;
-        GetWindowRect(GetDesktopWindow(), &desktop);
-        glfwSetCursorPos(m_pWindow, desktop.right / 2, desktop.bottom / 2);
 
     }
 
