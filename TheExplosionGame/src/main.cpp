@@ -8,10 +8,8 @@ class TheExplosionGame : public TheExplosion::Application {
 
     float camera_translation_speed = 1.0f;
     float camera_rotation_speed = 1.0f;
-    float camera_position[3] = { 0.0f, 0.0f, 0.0f };
-    float camera_rotation[3] = { 0.0f, 0.0f, 0.0f };
-    double last_cursor_position[2];
-    double current_cursor_position[2];
+    double last_cursor_position[2] = { 0, 0 };
+    double current_cursor_position[2] = { 0, 0 };
     int framerate = 0;
     float delay = 0;
 
@@ -29,32 +27,34 @@ class TheExplosionGame : public TheExplosion::Application {
         current_cursor_position[0] = get_current_cursor_position().x;
         current_cursor_position[1] = get_current_cursor_position().y;
     
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_W)) { movement_delta.x += camera_translation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_S)) { movement_delta.x -= camera_translation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_A)) { movement_delta.y -= camera_translation_speed * deltaTime; }
-        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_D)) { movement_delta.y += camera_translation_speed * deltaTime; }
+        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_W)) { movement_delta.x += (float)(camera_translation_speed * deltaTime); }
+        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_S)) { movement_delta.x -= (float)(camera_translation_speed * deltaTime); }
+        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_A)) { movement_delta.y -= (float)(camera_translation_speed * deltaTime); }
+        if(TheExplosion::Input::isKeyPressed(TheExplosion::KeyCode::KEY_D)) { movement_delta.y += (float)(camera_translation_speed * deltaTime); }
         
         if(current_cursor_position[0] != last_cursor_position[0]) {
 
-            rotation_delta.z -= (current_cursor_position[0] - last_cursor_position[0]) * camera_rotation_speed;
+            rotation_delta.z -= (float)((current_cursor_position[0] - last_cursor_position[0]) * camera_rotation_speed);
             last_cursor_position[0] = current_cursor_position[0];
         
         }
         if(current_cursor_position[1] != last_cursor_position[1]) {
 
-            rotation_delta.y += (current_cursor_position[1] - last_cursor_position[1]) * camera_rotation_speed;
+            rotation_delta.y += (float)((current_cursor_position[1] - last_cursor_position[1]) * camera_rotation_speed);
             last_cursor_position[1] = current_cursor_position[1];
 
         }
 
+        if(camera.get_camera_rotation().z > 180) rotation_delta.z -= 360;
+        if(camera.get_camera_rotation().z < -180) rotation_delta.z += 360;
+
         camera.add_movement_rotation(movement_delta, rotation_delta);
-        camera_position[0] = camera.get_camera_position().x;
-        camera_position[1] = camera.get_camera_position().y;
-        camera_position[2] = camera.get_camera_position().z;
-        camera_rotation[0] = camera.get_camera_rotation().x;
-        camera_rotation[1] = camera.get_camera_rotation().y;
-        camera_rotation[2] = camera.get_camera_rotation().z;
-        delay += deltaTime;
+    
+    }
+
+	virtual void on_ui_draw() override {
+
+        delay += (float)deltaTime;
 
         if(delay >= 0.5f) {
 
@@ -62,10 +62,6 @@ class TheExplosionGame : public TheExplosion::Application {
             delay = 0;
 
         }
-    
-    }
-
-	virtual void on_ui_draw() override {
         
         ImGui::Begin("Menu");
         ImGui::Text(" ");
@@ -76,24 +72,24 @@ class TheExplosionGame : public TheExplosion::Application {
         ImGui::Text("Camera Position");
         ImGui::Text("X : ");
         ImGui::SetCursorPos(ImVec2(35, 95));
-        ImGui::Text(std::to_string(camera_position[0]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_position().x).c_str());
         ImGui::Text("Y : ");
         ImGui::SetCursorPos(ImVec2(35, 112));
-        ImGui::Text(std::to_string(camera_position[1]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_position().y).c_str());
         ImGui::Text("Z : ");
         ImGui::SetCursorPos(ImVec2(35, 129));
-        ImGui::Text(std::to_string(camera_position[2]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_position().z).c_str());
         ImGui::Text(" ");
         ImGui::Text("Camera Rotation");
         ImGui::Text("X : ");
         ImGui::SetCursorPos(ImVec2(35, 180));
-        ImGui::Text(std::to_string(camera_rotation[0]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_rotation().x).c_str());
         ImGui::Text("Y : ");
         ImGui::SetCursorPos(ImVec2(35, 197));
-        ImGui::Text(std::to_string(camera_rotation[1]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_rotation().y).c_str());
         ImGui::Text("Z : ");
         ImGui::SetCursorPos(ImVec2(35, 214));
-        ImGui::Text(std::to_string(camera_rotation[2]).c_str());
+        ImGui::Text(std::to_string(camera.get_camera_rotation().z).c_str());
         ImGui::Text(" ");
 
         ImGui::Text("Background");
