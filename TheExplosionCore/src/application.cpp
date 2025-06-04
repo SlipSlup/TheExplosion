@@ -15,7 +15,7 @@
 
 namespace TheExplosion {
 
-    float lastFrame = 0.0f;
+    double lastFrame = 0;
 
     GLfloat square_data[] = {
 
@@ -93,11 +93,75 @@ namespace TheExplosion {
 
         }
 
-        generate_circle(data, width, height, width * 0.5, height * 0.5, width * 0.4, 255, 255, 0);
-        generate_circle(data, width, height, width * 0.5, height * 0.4, width * 0.2, 0, 0, 0);
-        generate_circle(data, width, height, width * 0.5, height * 0.45, width * 0.2, 255, 255, 0);
-        generate_circle(data, width, height, width * 0.35, height * 0.6, width * 0.07, 255, 0, 255);
-        generate_circle(data, width, height, width * 0.65, height * 0.6, width * 0.07, 0, 0, 255);
+        generate_circle(
+            
+            data,
+            width,
+            height,
+            (const unsigned int)(width * 0.5),
+            (const unsigned int)(height * 0.5),
+            (const unsigned int)(width * 0.4),
+            255,
+            255,
+            0
+        
+        );
+
+        generate_circle(
+            
+            data,
+            width,
+            height,
+            (const unsigned int)(width * 0.5),
+            (const unsigned int)(height * 0.4),
+            (const unsigned int)(width * 0.2),
+            0,
+            0,
+            0
+        
+        );
+
+        generate_circle(
+            
+            data,
+            width,
+            height,
+            (const unsigned int)(width * 0.5),
+            (const unsigned int)(height * 0.45),
+            (const unsigned int)(width * 0.2),
+            255,
+            255,
+            0
+        
+        );
+
+        generate_circle(
+            
+            data,
+            width,
+            height,
+            (const unsigned int)(width * 0.35),
+            (const unsigned int)(height * 0.6),
+            (const unsigned int)(width * 0.07),
+            255,
+            0,
+            255
+        
+        );
+
+        generate_circle(
+            
+            data,
+            width,
+            height,
+            (const unsigned int)(width * 0.65),
+            (const unsigned int)(height * 0.6),
+            (const unsigned int)(width * 0.07),
+            0,
+            0,
+            255
+        
+        );
 
     }
 
@@ -192,16 +256,14 @@ namespace TheExplosion {
         p_vao->add_vertex_buffer(*p_positions_colors_vbo);
         p_vao->set_index_buffer(*p_index_buffer);
 
-        on_start();
-
 		while(!m_bCloseWindow) {
 
             glm::mat4 square_scale_matrix(
 
-                square_scale[0], 0, 0, 0,
-                0, square_scale[1], 0, 0,
-                0, 0, square_scale[2], 0,
-                0, 0, 0, 1
+                square_scale[0], 0,               0,               0,
+                0,               square_scale[1], 0,               0,
+                0,               0,               square_scale[2], 0,
+                0,               0,               0,               1
 
             );
 
@@ -209,10 +271,10 @@ namespace TheExplosion {
 
             glm::mat4 square_rotation_matrix_x(
 
-                1, 0, 0, 0,
-                0, cos(square_rotation_in_radians_x), sin(square_rotation_in_radians_x), 0,
+                1,  0,                                 0,                                 0,
+                0,  cos(square_rotation_in_radians_x), sin(square_rotation_in_radians_x), 0,
                 0, -sin(square_rotation_in_radians_x), cos(square_rotation_in_radians_x), 0,
-                0, 0, 0, 1
+                0,  0,                                 0,                                 1
 
             );
 
@@ -221,9 +283,9 @@ namespace TheExplosion {
             glm::mat4 square_rotation_matrix_y(
 
                 cos(square_rotation_in_radians_y), 0, -sin(square_rotation_in_radians_y), 0,
-                0, 1, 0, 0,
-                sin(square_rotation_in_radians_y), 0, cos(square_rotation_in_radians_y), 0,
-                0, 0, 0, 1
+                0,                                 1,  0,                                 0,
+                sin(square_rotation_in_radians_y), 0,  cos(square_rotation_in_radians_y), 0,
+                0,                                 0,  0,                                 1
 
             );
 
@@ -231,18 +293,18 @@ namespace TheExplosion {
 
             glm::mat4 square_rotation_matrix_z(
 
-                cos(square_rotation_in_radians_z), sin(square_rotation_in_radians_z), 0, 0,
+                 cos(square_rotation_in_radians_z), sin(square_rotation_in_radians_z), 0, 0,
                 -sin(square_rotation_in_radians_z), cos(square_rotation_in_radians_z), 0, 0,
-                0, 0, 1, 0,
-                0, 0, 0, 1
+                 0,                                 0,                                 1, 0,
+                 0,                                 0,                                 0, 1
 
             );
 
             glm::mat4 square_translation_matrix(
 
-                1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
+                1,                     0,                     0,                     0,
+                0,                     1,                     0,                     0,
+                0,                     0,                     1,                     0,
                 square_translation[0], square_translation[1], square_translation[2], 1
 
             );
@@ -293,12 +355,18 @@ namespace TheExplosion {
 	
 	}
 
-    glm::vec2 Application::get_current_cursor_position() const { return m_pWindow->get_current_cursor_position(); }
+    glm::vec2 Application::get_current_cursor_position() const { return m_pWindow -> get_current_cursor_position(); }
 
     int Application::get_window_width() {
 
         RECT desktop;
-        GetWindowRect(GetDesktopWindow(), &desktop);
+
+        GetWindowRect(
+            
+            GetDesktopWindow(),
+            &desktop
+        
+        );
 
         return desktop.right;
 
@@ -307,7 +375,13 @@ namespace TheExplosion {
     int Application::get_window_height() {
 
         RECT desktop;
-        GetWindowRect(GetDesktopWindow(), &desktop);
+
+        GetWindowRect(
+            
+            GetDesktopWindow(),
+            &desktop
+        
+        );
 
         return desktop.bottom;
 

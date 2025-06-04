@@ -43,7 +43,7 @@ namespace TheExplosion {
 
 		const glm::mat3 rotation_matrix_x(
 
-			1,  0,							0,
+			1,  0,					  0,
 			0,  cos(roll_in_radians), sin(roll_in_radians),
 			0, -sin(roll_in_radians), cos(roll_in_radians)
 
@@ -52,7 +52,7 @@ namespace TheExplosion {
 		const glm::mat3 rotation_matrix_y(
 
 			cos(pitch_in_radians), 0, -sin(pitch_in_radians),
-			0,							1,  0,
+			0,					   1,  0,
 			sin(pitch_in_radians), 0,  cos(pitch_in_radians)
 
 		);
@@ -61,15 +61,28 @@ namespace TheExplosion {
 
 			 cos(yaw_in_radians), sin(yaw_in_radians), 0,
 			-sin(yaw_in_radians), cos(yaw_in_radians), 0,
-			 0,							 0,							 1
+			 0,					  0,				   1
 
 		);
 
 		const glm::mat3 euler_rotation_matrix = rotation_matrix_z * rotation_matrix_y * rotation_matrix_x;
 		m_direction = glm::normalize(euler_rotation_matrix * s_world_forward);
 		m_right = glm::normalize(euler_rotation_matrix * s_world_right);
-		m_up = glm::cross(m_right, m_direction);
-		m_view_matrix = glm::lookAt(m_position, m_position + m_direction, m_up);
+
+		m_up = glm::cross(
+			
+			m_right,
+			m_direction
+		
+		);
+
+		m_view_matrix = glm::lookAt(
+			
+			m_position,
+			m_position + m_direction,
+			m_up
+		
+		);
 
 	}
 
@@ -115,8 +128,10 @@ namespace TheExplosion {
 		m_position += m_right * movement_delta.y;
 		m_position += m_up * movement_delta.z;
 		m_rotation += rotation_delta;
+
 		if(m_rotation.y < -90) m_rotation.y = -90;
 		if(m_rotation.y > 90) m_rotation.y = 90;
+
 		m_update_view_matrix = true;
 
 	}

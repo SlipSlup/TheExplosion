@@ -12,8 +12,21 @@ namespace TheExplosion {
 
 		Camera(
 
-			const glm::vec3& position = { 0, 0, 0 },
-			const glm::vec3& rotation = { 0, 0, 0 }
+			const glm::vec3& position = {
+				
+				0,
+				0,
+				0
+			
+			},
+
+			const glm::vec3& rotation = {
+				
+				0,
+				0,
+				0
+			
+			}
 		
 		);
 
@@ -48,9 +61,31 @@ namespace TheExplosion {
 		glm::vec3 m_direction;
 		glm::vec3 m_right;
 		glm::vec3 m_up;
-		static constexpr glm::vec3 s_world_up{ 0.0f, 0.0f, 1.0f };
-		static constexpr glm::vec3 s_world_right{ 0.0f, -1.0f, 0.0f };
-		static constexpr glm::vec3 s_world_forward{ 1.0f, 0.0f, 0.0f };
+
+		static constexpr glm::vec3 s_world_up {
+			
+			0.0f,
+			0.0f,
+			1.0f
+		
+		};
+
+		static constexpr glm::vec3 s_world_right {
+			
+			 0.0f,
+			-1.0f,
+			 0.0f
+		
+		};
+
+		static constexpr glm::vec3 s_world_forward {
+			
+			1.0f,
+			0.0f,
+			0.0f
+		
+		};
+
 		bool m_update_view_matrix = false;
 
 	};

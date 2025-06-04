@@ -68,6 +68,7 @@ namespace TheExplosion {
 		m_count = index_buffer.m_count;
 		index_buffer.m_id = 0;
 		index_buffer.m_count = 0;
+
 		return *this;
 
 	}

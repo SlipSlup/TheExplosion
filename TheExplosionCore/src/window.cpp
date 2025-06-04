@@ -56,8 +56,21 @@ namespace TheExplosion {
         );
 
         RECT desktop;
-        GetWindowRect(GetDesktopWindow(), &desktop);
-        glfwSetCursorPos(m_pWindow, desktop.right / 2, desktop.bottom / 2);
+
+        GetWindowRect(
+            
+            GetDesktopWindow(),
+            &desktop
+        
+        );
+
+        glfwSetCursorPos(
+            
+            m_pWindow,
+            desktop.right / 2,
+            desktop.bottom / 2
+        
+        );
 
         glfwSetWindowUserPointer(
             
@@ -86,7 +99,13 @@ namespace TheExplosion {
 
                     case GLFW_PRESS : {
 
-                        EventKeyPressed event(static_cast<KeyCode>(key), false);
+                        EventKeyPressed event(
+                            
+                            static_cast<KeyCode>(key),
+                            false
+                            
+                        );
+
                         data.eventCallbackFn(event);
 
                         break;
@@ -104,7 +123,13 @@ namespace TheExplosion {
 
                     case GLFW_REPEAT : {
 
-                        EventKeyPressed event(static_cast<KeyCode>(key), true);
+                        EventKeyPressed event(
+                            
+                            static_cast<KeyCode>(key),
+                            true
+                            
+                        );
+                        
                         data.eventCallbackFn(event);
 
                         break;
@@ -179,7 +204,14 @@ namespace TheExplosion {
 
         double x_pos;
         double y_pos;
-        glfwGetCursorPos(m_pWindow, &x_pos, &y_pos);
+
+        glfwGetCursorPos(
+            
+            m_pWindow,
+            &x_pos,
+            &y_pos
+        
+        );
 
         return { x_pos, y_pos };
 

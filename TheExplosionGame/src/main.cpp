@@ -12,16 +12,18 @@ class TheExplosionGame : public TheExplosion::Application {
     double current_cursor_position[2] = { 0, 0 };
     int framerate = 0;
     float delay = 0;
-
-    virtual void on_start() override {
-    
-        last_cursor_position[0] = get_current_cursor_position().x;
-        last_cursor_position[1] = get_current_cursor_position().y;
-    
-    }
+    bool cursor_position_got = false;
 	
 	virtual void on_update() override {
 
+        if(!cursor_position_got) {
+
+            last_cursor_position[0] = get_current_cursor_position().x;
+            last_cursor_position[1] = get_current_cursor_position().y;
+            cursor_position_got = true;
+
+        }
+        
         glm::vec3 movement_delta{ 0, 0, 0 };
         glm::vec3 rotation_delta{ 0, 0, 0 };
         current_cursor_position[0] = get_current_cursor_position().x;
@@ -66,29 +68,106 @@ class TheExplosionGame : public TheExplosion::Application {
         ImGui::Begin("Menu");
         ImGui::Text(" ");
         ImGui::Text("FPS : ");
-        ImGui::SetCursorPos(ImVec2(49, 44));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                49,
+                44
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(framerate).c_str());
         ImGui::Text(" ");
         ImGui::Text("Camera Position");
         ImGui::Text("X : ");
-        ImGui::SetCursorPos(ImVec2(35, 95));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                95
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_position().x).c_str());
         ImGui::Text("Y : ");
-        ImGui::SetCursorPos(ImVec2(35, 112));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                112
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_position().y).c_str());
         ImGui::Text("Z : ");
-        ImGui::SetCursorPos(ImVec2(35, 129));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                129
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_position().z).c_str());
         ImGui::Text(" ");
         ImGui::Text("Camera Rotation");
         ImGui::Text("X : ");
-        ImGui::SetCursorPos(ImVec2(35, 180));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                180
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_rotation().x).c_str());
         ImGui::Text("Y : ");
-        ImGui::SetCursorPos(ImVec2(35, 197));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                197
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_rotation().y).c_str());
         ImGui::Text("Z : ");
-        ImGui::SetCursorPos(ImVec2(35, 214));
+
+        ImGui::SetCursorPos(
+            
+            ImVec2(
+                
+                35,
+                214
+            
+            )
+        
+        );
+
         ImGui::Text(std::to_string(camera.get_camera_rotation().z).c_str());
         ImGui::Text(" ");
 
@@ -141,6 +220,6 @@ const char* game_name = "The Explosion";
 int main() {
 
     auto app = std::make_unique<TheExplosionGame>();
-	app->start(game_name);
+	app -> start(game_name);
 
 }
