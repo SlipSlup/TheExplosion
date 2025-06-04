@@ -1,0 +1,30 @@
+﻿  Building Custom Rule C:/Users/Daniil/Desktop/GIT/TheExplosion/TheExplosionCore/CMakeLists.txt
+  application.cpp
+  window.cpp
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(96,79): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(96,66): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(96,52): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(97,79): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(97,66): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(97,52): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(98,80): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(98,66): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(98,52): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(99,80): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(99,67): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(99,52): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(100,80): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(100,67): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(100,52): warning C4244: аргумент: преобразование "double" в "const unsigned int", возможна потеря данных
+C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp(279,25): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\Windows Kits\10\Include\10.0.22621.0\shared\minwindef.h(130,9): warning C4005: APIENTRY: изменение макроопределения
+  shader_program.cpp
+  vertex_buffer.cpp
+  vertex_array.cpp
+  index_buffer.cpp
+  camera.cpp
+  renderer.cpp
+  UI.cpp
+  input.cpp
+  Создание кода...
+  TheExplosionCore.vcxproj -> C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\Release\TheExplosionCore.lib

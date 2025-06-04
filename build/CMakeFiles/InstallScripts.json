@@ -1,0 +1,15 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glfw/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glfw/src/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glfw/docs/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glad/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glm/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/glm/glm/cmake_install.cmake",
+		"C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionGame/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

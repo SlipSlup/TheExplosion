@@ -1,0 +1,10 @@
+^C:\USERS\DANIIL\DESKTOP\GIT\THEEXPLOSION\BUILD\CMAKEFILES\4D983F4DB2E0FAAA5E352EBCD8CBF4CB\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Daniil/Desktop/GIT/TheExplosion -BC:/Users/Daniil/Desktop/GIT/TheExplosion/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Daniil/Desktop/GIT/TheExplosion/build/Project.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -144,13 +144,6 @@ namespace TheExplosion {
 	Application::~Application() {}
 
 	int Application::start(const char* title) {
-	
-		ShowWindow(
-			
-			GetConsoleWindow(),
-			SW_HIDE
-		
-		);
 
 		m_pWindow = std::make_unique<Window>(
 			

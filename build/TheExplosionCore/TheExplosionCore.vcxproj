@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9250C2C4-1DF7-37BA-ADA9-75BBC2F8391B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>TheExplosionCore</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TheExplosionCore.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TheExplosionCore</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TheExplosionCore.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TheExplosionCore</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TheExplosionCore.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TheExplosionCore</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TheExplosionCore.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TheExplosionCore</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glfw\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glad\include;C:\Users\Daniil\Desktop\GIT\TheExplosion\external\glm;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external;C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/Daniil/Desktop/GIT/TheExplosion/TheExplosionCore/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Daniil/Desktop/GIT/TheExplosion -BC:/Users/Daniil/Desktop/GIT/TheExplosion/build --check-stamp-file C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/Daniil/Desktop/GIT/TheExplosion/TheExplosionCore/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Daniil/Desktop/GIT/TheExplosion -BC:/Users/Daniil/Desktop/GIT/TheExplosion/build --check-stamp-file C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/Daniil/Desktop/GIT/TheExplosion/TheExplosionCore/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Daniil/Desktop/GIT/TheExplosion -BC:/Users/Daniil/Desktop/GIT/TheExplosion/build --check-stamp-file C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/Daniil/Desktop/GIT/TheExplosion/TheExplosionCore/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Daniil/Desktop/GIT/TheExplosion -BC:/Users/Daniil/Desktop/GIT/TheExplosion/build --check-stamp-file C:/Users/Daniil/Desktop/GIT/TheExplosion/build/TheExplosionCore/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\application.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\window.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\shader_program.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\vertex_buffer.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\vertex_array.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\index_buffer.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\camera.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\renderer.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\UI.cpp" />
+    <ClCompile Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\input.cpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\window.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\shader_program.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\vertex_buffer.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\vertex_array.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\index_buffer.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\renderer.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\src\UI.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes\application.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes\event.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes\camera.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes\keys.hpp" />
+    <ClInclude Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\TheExplosionCore\includes\input.hpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\build\ZERO_CHECK.vcxproj">
+      <Project>{24FF7F21-18C7-330D-8CE0-8DCD5E56371F}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\ImGui.vcxproj">
+      <Project>{79C96135-93C5-367D-8629-017A659A4166}</Project>
+      <Name>ImGui</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\glad\glad.vcxproj">
+      <Project>{CCDC9E11-DBF1-3D78-90F0-D6A500E525AC}</Project>
+      <Name>glad</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\glfw\src\glfw.vcxproj">
+      <Project>{96A4BEB8-ACAA-3B07-9411-A454D78B1E9B}</Project>
+      <Name>glfw</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\Daniil\Desktop\GIT\TheExplosion\build\TheExplosionCore\glm\glm\glm.vcxproj">
+      <Project>{6BD27962-80D3-366F-91B3-34A01783AA50}</Project>
+      <Name>glm</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
