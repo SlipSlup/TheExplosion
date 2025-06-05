@@ -12,58 +12,47 @@
 #include "UI.hpp"
 #include <imgui/imgui.h>
 #include "input.hpp"
+#include <glad/glad.h>
 
 namespace TheExplosion {
 
     double lastFrame = 0;
 
-    GLfloat square_data[] = {
+    GLfloat square_positions_coords[] = {
 
-         0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f
+        0.0f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,   2.0f, -1.0f,
+        0.0f,  0.5f, -0.5f,   0.0f, 1.0f, 1.0f,  -1.0f, -1.0f,
+        0.0f, -0.5f,  0.5f,   1.0f, 0.0f, 1.0f,   2.0f,  2.0f,
+        0.0f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,  -1.0f,  2.0f
 
     };
 
-    GLuint square_indices[] = {
+    GLuint square_indices[] = { 0, 1, 2, 3, 2, 1 };
 
-        0, 1, 3, 2, 3, 1,
-        3, 2, 4, 5, 4, 2,
-        3, 4, 0, 7, 0, 4,
-        7, 4, 6, 5, 6, 4,
-        7, 6, 0, 1, 0, 6,
-        1, 6, 2, 5, 2, 6
+    void generate_quads_texture(
 
-    };
-
-    void generate_circle(
-        
         unsigned char* data,
         const unsigned int width,
-        const unsigned int height,
-        const unsigned int center_x,
-        const unsigned int center_y,
-        const unsigned int radius,
-        const unsigned char color_r,
-        const unsigned char color_g,
-        const unsigned char color_b
-    
+        const unsigned int height
+
     ) {
 
-        for(unsigned int x = 0; x < width; ++x) {
+        for(unsigned int x = 0; x < width; x++) {
 
-            for(unsigned int y = 0; y < height; ++y) {
+            for(unsigned int y = 0; y < height; y++) {
 
-                if((x - center_x) * (x - center_x) + (y - center_y) * (y - center_y) < radius * radius) {
+                if((x < width / 2 && y < height / 2) || x >= width / 2 && y >= height / 2) {
 
-                    data[3 * (x + width * y) + 0] = color_r;
-                    data[3 * (x + width * y) + 1] = color_g;
-                    data[3 * (x + width * y) + 2] = color_b;
+                    data[3 * (x + width * y) + 0] = 0;
+                    data[3 * (x + width * y) + 1] = 0;
+                    data[3 * (x + width * y) + 2] = 0;
+
+                }
+                else {
+
+                    data[3 * (x + width * y) + 0] = 255;
+                    data[3 * (x + width * y) + 1] = 255;
+                    data[3 * (x + width * y) + 2] = 255;
 
                 }
 
@@ -73,111 +62,23 @@ namespace TheExplosion {
 
     }
 
-    void generate_smile_texture(
-        
-        unsigned char* data,
-        const unsigned int width,
-        const unsigned int height
-    
-    ) {
-        
-        for(unsigned int x = 0; x < width; ++x) {
-
-            for(unsigned int y = 0; y < height; ++y) {
-
-                data[3 * (x + width * y) + 0] = 200;
-                data[3 * (x + width * y) + 1] = 191;
-                data[3 * (x + width * y) + 2] = 231;
-
-            }
-
-        }
-
-        generate_circle(
-            
-            data,
-            width,
-            height,
-            (const unsigned int)(width * 0.5),
-            (const unsigned int)(height * 0.5),
-            (const unsigned int)(width * 0.4),
-            255,
-            255,
-            0
-        
-        );
-
-        generate_circle(
-            
-            data,
-            width,
-            height,
-            (const unsigned int)(width * 0.5),
-            (const unsigned int)(height * 0.4),
-            (const unsigned int)(width * 0.2),
-            0,
-            0,
-            0
-        
-        );
-
-        generate_circle(
-            
-            data,
-            width,
-            height,
-            (const unsigned int)(width * 0.5),
-            (const unsigned int)(height * 0.45),
-            (const unsigned int)(width * 0.2),
-            255,
-            255,
-            0
-        
-        );
-
-        generate_circle(
-            
-            data,
-            width,
-            height,
-            (const unsigned int)(width * 0.35),
-            (const unsigned int)(height * 0.6),
-            (const unsigned int)(width * 0.07),
-            255,
-            0,
-            255
-        
-        );
-
-        generate_circle(
-            
-            data,
-            width,
-            height,
-            (const unsigned int)(width * 0.65),
-            (const unsigned int)(height * 0.6),
-            (const unsigned int)(width * 0.07),
-            0,
-            0,
-            255
-        
-        );
-
-    }
-
     const char* vertex_shader = R"(
         
         #version 330
         
         layout(location = 0) in vec3 vertex_position;
         layout(location = 1) in vec3 vertex_color;
+        layout(location = 2) in vec2 texture_coord;
         uniform mat4 model_matrix;
         uniform mat4 view_projection_matrix;
+        uniform int current_frame;
         out vec3 color;
+        out vec2 tex_coord;
         
         void main() {
         
             color = vertex_color;
+            tex_coord = texture_coord + vec2(current_frame / 1000.0f * 0.1f, current_frame / 1000.0f * 0.1f);
             gl_Position = view_projection_matrix * model_matrix * vec4(vertex_position, 1.0);
         
         }
@@ -189,11 +90,14 @@ namespace TheExplosion {
         #version 330
         
         in vec3 color;
+        in vec2 tex_coord;
+        uniform sampler2D tex;
         out vec4 frag_color;
         
         void main() {
         
-            frag_color = vec4(color, 1.0);
+            //frag_color = vec4(color, 1.0);
+            frag_color = texture(tex, tex_coord);
         
         }
         
@@ -221,11 +125,24 @@ namespace TheExplosion {
         m_event_dispatcher.add_event_listener<EventKeyPressed>([&](EventKeyPressed& event) { Input::PressKey(event.key_code); });
         m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) { Input::ReleaseKey(event.key_code); });
 		m_pWindow->set_event_callback([&](BaseEvent& event) { m_event_dispatcher.dispatch(event); });
+        
+        const unsigned int width = 1000;
+        const unsigned int height = 1000;
+        auto* data = new unsigned char[width * height * 3];
+        generate_quads_texture(data, width, height);
+        GLuint textureHandle_Quads;
+        glGenTextures(1, &textureHandle_Quads);
+        glBindTexture(GL_TEXTURE_2D, textureHandle_Quads);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glGenerateMipmap(GL_TEXTURE_2D);
 
-        BufferLayout buffer_layout_2vec3{
+        BufferLayout buffer_layout {
 
             ShaderDataType::Float3,
-            ShaderDataType::Float3
+            ShaderDataType::Float3,
+            ShaderDataType::Float2
 
         };
 
@@ -240,9 +157,9 @@ namespace TheExplosion {
 
         p_positions_colors_vbo = std::make_unique<VertexBuffer>(
 
-            square_data,
-            sizeof(square_data),
-            buffer_layout_2vec3
+            square_positions_coords,
+            sizeof(square_positions_coords),
+            buffer_layout
 
         );
 
@@ -327,6 +244,17 @@ namespace TheExplosion {
 
             );
 
+            double currentFrame = glfwGetTime();
+            deltaTime = currentFrame - lastFrame;
+            lastFrame = currentFrame;
+
+            p_shader_program->set_int(
+
+                "current_frame",
+                (int)(lastFrame * 1000)
+
+            );
+
             Renderer::set_clear_color(
 
                 m_background_color[0],
@@ -336,9 +264,6 @@ namespace TheExplosion {
 
             );
 
-            double currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
             Renderer::clear();
             Renderer::draw(*p_vao);
             UI::on_ui_draw_begin();
@@ -349,7 +274,7 @@ namespace TheExplosion {
 
 		}
 
-		m_pWindow = nullptr;
+        m_pWindow = nullptr;
 
 		return 0;
 	

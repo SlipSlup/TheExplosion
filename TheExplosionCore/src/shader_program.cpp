@@ -140,4 +140,26 @@ namespace TheExplosion {
 	
 	}
 
+	void ShaderProgram::set_int(
+
+		const char* name,
+		const int value
+
+	) const {
+
+		glUniform1i(
+
+			glGetUniformLocation(
+
+				m_id,
+				name
+
+			),
+
+			value
+
+		);
+
+	}
+
 }

@@ -32,6 +32,13 @@ namespace TheExplosion {
 		
 		) const;
 
+		void set_int(
+			
+			const char* name,
+			const int value
+		
+		) const;
+
 	private:
 
 		unsigned int m_id = 0;
