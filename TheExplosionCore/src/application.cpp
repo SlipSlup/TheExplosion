@@ -13,6 +13,7 @@
 #include <imgui/imgui.h>
 #include "input.hpp"
 #include <glad/glad.h>
+#include "texture2d.hpp"
 
 namespace TheExplosion {
 
@@ -20,14 +21,28 @@ namespace TheExplosion {
 
     GLfloat square_positions_coords[] = {
 
-        0.0f, -0.5f, -0.5f,   1.0f, 1.0f, 0.0f,   2.0f, -1.0f,
-        0.0f,  0.5f, -0.5f,   0.0f, 1.0f, 1.0f,  -1.0f, -1.0f,
-        0.0f, -0.5f,  0.5f,   1.0f, 0.0f, 1.0f,   2.0f,  2.0f,
-        0.0f,  0.5f,  0.5f,   1.0f, 0.0f, 0.0f,  -1.0f,  2.0f
+        -1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+        -1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
+        -1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
+
+         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+         1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
+         1.0f,  1.0f,  1.0f, 0.0f, 1.0f
 
     };
 
-    GLuint square_indices[] = { 0, 1, 2, 3, 2, 1 };
+    GLuint square_indices[] = {
+        
+        0, 1, 2, 3, 2, 1,
+        4, 5, 6, 7, 6, 5,
+        0, 4, 6, 0, 2, 6,
+        1, 5, 3, 3, 7, 5,
+        3, 7, 2, 7, 6, 2,
+        1, 5, 0, 5, 0, 4
+    
+    };
 
     void generate_quads_texture(
 
@@ -67,17 +82,14 @@ namespace TheExplosion {
         #version 330
         
         layout(location = 0) in vec3 vertex_position;
-        layout(location = 1) in vec3 vertex_color;
-        layout(location = 2) in vec2 texture_coord;
+        layout(location = 1) in vec2 texture_coord;
         uniform mat4 model_matrix;
         uniform mat4 view_projection_matrix;
         uniform int current_frame;
-        out vec3 color;
         out vec2 tex_coord;
         
         void main() {
         
-            color = vertex_color;
             tex_coord = texture_coord + vec2(current_frame / 1000.0f * 0.1f, current_frame / 1000.0f * 0.1f);
             gl_Position = view_projection_matrix * model_matrix * vec4(vertex_position, 1.0);
         
@@ -89,14 +101,12 @@ namespace TheExplosion {
         
         #version 330
         
-        in vec3 color;
         in vec2 tex_coord;
         uniform sampler2D tex;
         out vec4 frag_color;
         
         void main() {
         
-            //frag_color = vec4(color, 1.0);
             frag_color = texture(tex, tex_coord);
         
         }
@@ -107,6 +117,7 @@ namespace TheExplosion {
     std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
     std::unique_ptr<IndexBuffer> p_index_buffer;
     std::unique_ptr<VertexArray> p_vao;
+    std::unique_ptr<Texture2D> p_texture;
 	
 	Application::Application() {}
 	Application::~Application() {}
@@ -121,7 +132,7 @@ namespace TheExplosion {
 		
 		);
 
-		m_event_dispatcher.add_event_listener<EventWindowClose>([&](EventWindowClose& event) { m_bCloseWindow = true; });
+		m_event_dispatcher.add_event_listener<EventWindowClose>([&](EventWindowClose& event) { close(); });
         m_event_dispatcher.add_event_listener<EventKeyPressed>([&](EventKeyPressed& event) { Input::PressKey(event.key_code); });
         m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) { Input::ReleaseKey(event.key_code); });
 		m_pWindow->set_event_callback([&](BaseEvent& event) { m_event_dispatcher.dispatch(event); });
@@ -130,17 +141,12 @@ namespace TheExplosion {
         const unsigned int height = 1000;
         auto* data = new unsigned char[width * height * 3];
         generate_quads_texture(data, width, height);
-        GLuint textureHandle_Quads;
-        glGenTextures(1, &textureHandle_Quads);
-        glBindTexture(GL_TEXTURE_2D, textureHandle_Quads);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glGenerateMipmap(GL_TEXTURE_2D);
+        p_texture = std::make_unique<Texture2D>(data, width, height);
+        p_texture -> bind(0);
+        delete[] data;
 
         BufferLayout buffer_layout {
 
-            ShaderDataType::Float3,
             ShaderDataType::Float3,
             ShaderDataType::Float2
 
@@ -172,6 +178,7 @@ namespace TheExplosion {
 
         p_vao->add_vertex_buffer(*p_positions_colors_vbo);
         p_vao->set_index_buffer(*p_index_buffer);
+        Renderer::enable_depth_test();
 
 		while(!m_bCloseWindow) {
 
@@ -311,5 +318,7 @@ namespace TheExplosion {
         return desktop.bottom;
 
     }
+
+    void Application::close() { m_bCloseWindow = true; }
 
 }

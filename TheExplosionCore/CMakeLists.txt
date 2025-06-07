@@ -26,6 +26,7 @@ set(
 	src/index_buffer.hpp
 	src/renderer.hpp
 	src/UI.hpp
+	src/texture2d.hpp
 	
 )
 
@@ -43,6 +44,7 @@ set(
 	src/renderer.cpp
 	src/UI.cpp
 	src/input.cpp
+	src/texture2d.cpp
 	
 )
 

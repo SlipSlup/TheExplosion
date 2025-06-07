@@ -34,6 +34,9 @@ namespace TheExplosion {
 		
 		);
 
+		static void enable_depth_test();
+		static void disable_depth_test();
+
 	};
 
 }

@@ -48,7 +48,7 @@ namespace TheExplosion {
 	
 	}
 
-	void Renderer::clear() { glClear(GL_COLOR_BUFFER_BIT); }
+	void Renderer::clear() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 	void Renderer::set_viewport(
 
@@ -69,5 +69,9 @@ namespace TheExplosion {
 		);
 
 	}
+
+	void Renderer::enable_depth_test() { glEnable(GL_DEPTH_TEST); }
+
+	void Renderer::disable_depth_test() { glDisable(GL_DEPTH_TEST); }
 
 }

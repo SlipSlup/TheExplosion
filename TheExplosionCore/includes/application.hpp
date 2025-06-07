@@ -18,6 +18,7 @@ namespace TheExplosion {
 		Application& operator = (const Application&) = delete;
 		Application& operator = (Application&&) = delete;
 		virtual int start(const char* title);
+		void close();
 		virtual void on_update() {}
 		virtual void on_ui_draw() {}
 
@@ -57,7 +58,7 @@ namespace TheExplosion {
 			
 			glm::vec3(
 				
-				-2.0f,
+				-5.0f,
 				 0.0f,
 				 0.0f
 			
