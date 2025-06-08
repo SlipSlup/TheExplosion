@@ -14,33 +14,49 @@
 #include "input.hpp"
 #include <glad/glad.h>
 #include "texture2d.hpp"
+#include "stb_image/include/stb_image/stb_image.h"
 
 namespace TheExplosion {
 
     double lastFrame = 0;
 
     GLfloat square_positions_coords[] = {
-
-        -1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        
         -1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
         -1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
-
-         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
+         1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+         1.0f,  1.0f, -1.0f, 1.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f, 1.0f,
+         1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
          1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+        -1.0f,  1.0f, -1.0f, 1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
+        -1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f,  1.0f, 0.0f, 1.0f,
          1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
-         1.0f,  1.0f,  1.0f, 0.0f, 1.0f
+        -1.0f,  1.0f,  1.0f, 0.0f, 0.0f,
+        -1.0f, -1.0f,  1.0f, 1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
+         1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
+         1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f,  1.0f, -1.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, -1.0f, 1.0f, 1.0f,
 
     };
 
     GLuint square_indices[] = {
         
-        0, 1, 2, 3, 2, 1,
-        4, 5, 6, 7, 6, 5,
-        0, 4, 6, 0, 2, 6,
-        1, 5, 3, 3, 7, 5,
-        3, 7, 2, 7, 6, 2,
-        1, 5, 0, 5, 0, 4
+         0,  1,  2,  3,  2,  1,
+         4,  5,  6,  7,  6,  5,
+         8,  9, 10, 11, 10,  9,
+        12, 13, 14, 15, 14, 13,
+        16, 17, 18, 19, 18, 17,
+        20, 21, 22, 23, 22, 21
     
     };
 
@@ -137,13 +153,13 @@ namespace TheExplosion {
         m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) { Input::ReleaseKey(event.key_code); });
 		m_pWindow->set_event_callback([&](BaseEvent& event) { m_event_dispatcher.dispatch(event); });
         
-        const unsigned int width = 1000;
-        const unsigned int height = 1000;
-        auto* data = new unsigned char[width * height * 3];
-        generate_quads_texture(data, width, height);
-        p_texture = std::make_unique<Texture2D>(data, width, height);
+        int width = 423;
+        int height = 318;
+        int channels = 3;
+        unsigned char* img = stbi_load("img.png", &width, &height, &channels, STBI_rgb);
+        p_texture = std::make_unique<Texture2D>(img, width, height);
         p_texture -> bind(0);
-        delete[] data;
+        stbi_image_free(img);
 
         BufferLayout buffer_layout {
 

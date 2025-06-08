@@ -75,6 +75,9 @@ target_link_libraries(${CORE_NAME} PRIVATE glad)
 add_subdirectory(../external/glm ${CMAKE_CURRENT_BINARY_DIR}/glm)
 target_link_libraries(${CORE_NAME} PRIVATE glm)
 
+add_subdirectory(../external/stb_image ${CMAKE_CURRENT_BINARY_DIR}/stb_image)
+target_link_libraries(${CORE_NAME} PRIVATE stb_image)
+
 set(
 
 	IMGUI_INCLUDES
