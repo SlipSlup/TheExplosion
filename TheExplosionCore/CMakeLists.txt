@@ -12,6 +12,9 @@ set(
 	includes/camera.hpp
 	includes/keys.hpp
 	includes/input.hpp
+	includes/vertex_array.hpp
+	includes/vertex_buffer.hpp
+	includes/index_buffer.hpp
 	
 )
 
@@ -21,9 +24,6 @@ set(
 	
 	src/window.hpp
 	src/shader_program.hpp
-	src/vertex_buffer.hpp
-	src/vertex_array.hpp
-	src/index_buffer.hpp
 	src/renderer.hpp
 	src/UI.hpp
 	src/texture2d.hpp
@@ -77,6 +77,9 @@ target_link_libraries(${CORE_NAME} PRIVATE glm)
 
 add_subdirectory(../external/stb_image ${CMAKE_CURRENT_BINARY_DIR}/stb_image)
 target_link_libraries(${CORE_NAME} PRIVATE stb_image)
+
+add_subdirectory(../external/assimp ${CMAKE_CURRENT_BINARY_DIR}/assimp)
+target_link_libraries(${CORE_NAME} PRIVATE assimp)
 
 set(
 

@@ -4,6 +4,7 @@
 #include "event.hpp"
 #include "camera.hpp"
 #include <memory>
+#include "vertex_array.hpp"
 
 namespace TheExplosion {
 	
@@ -24,23 +25,23 @@ namespace TheExplosion {
 
 		float square_scale[3] = {
 			
-			1.0f,
-			1.0f,
-			1.0f
+			0.05f,
+			0.05f,
+			0.05f
 		
 		};
 
 		float square_rotation[3] = {
 			
-			0.0f,
-			0.0f,
-			0.0f
+			 90.0f,
+			 0.0f,
+			-50.0f
 		
 		};
 
 		float square_translation[3] = {
 			
-			0.0f,
+			2.5f,
 			0.0f,
 			0.0f
 		
@@ -58,18 +59,22 @@ namespace TheExplosion {
 			
 			glm::vec3(
 				
-				-5.0f,
 				 0.0f,
-				 0.0f
+				 0.0f,
+				 1.5f
 			
 			)
 		
 		};
 
 		double deltaTime = 0.0f;
+		double currentFrame = 0;
 		glm::vec2 get_current_cursor_position() const;
 		int get_window_width();
 		int get_window_height();
+		void play_sound(const char* path);
+		std::vector<float> get_model_vertices(const char* modelPath);
+		std::vector<unsigned int> get_model_indices(const char* modelPath);
 
 	private:
 

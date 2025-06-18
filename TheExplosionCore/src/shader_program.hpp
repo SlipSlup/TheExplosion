@@ -39,6 +39,8 @@ namespace TheExplosion {
 		
 		) const;
 
+		unsigned int get_id() { return m_id; }
+
 	private:
 
 		unsigned int m_id = 0;

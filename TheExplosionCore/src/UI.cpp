@@ -6,8 +6,6 @@
 
 namespace TheExplosion {
 
-    
-
 	void UI::on_window_create(GLFWwindow* pWindow) {
 
         IMGUI_CHECKVERSION();

@@ -16,98 +16,34 @@
 #include "texture2d.hpp"
 #include "stb_image/include/stb_image/stb_image.h"
 
+#include <iostream>
+#include <vector>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include <mmsystem.h>
+#pragma comment (lib , "winmm.lib")
+
 namespace TheExplosion {
 
     double lastFrame = 0;
 
-    GLfloat square_positions_coords[] = {
-        
-        -1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
-        -1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
-         1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
-         1.0f,  1.0f, -1.0f, 1.0f, 0.0f,
-         1.0f, -1.0f,  1.0f, 0.0f, 1.0f,
-         1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
-         1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
-        -1.0f,  1.0f, -1.0f, 1.0f, 0.0f,
-         1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
-        -1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
-         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
-        -1.0f, -1.0f,  1.0f, 0.0f, 1.0f,
-         1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
-        -1.0f,  1.0f,  1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f,  1.0f, 1.0f, 0.0f,
-         1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
-         1.0f, -1.0f,  1.0f, 1.0f, 1.0f,
-         1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
-         1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
-        -1.0f,  1.0f, -1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f, 1.0f, 1.0f,
-
-    };
-
-    GLuint square_indices[] = {
-        
-         0,  1,  2,  3,  2,  1,
-         4,  5,  6,  7,  6,  5,
-         8,  9, 10, 11, 10,  9,
-        12, 13, 14, 15, 14, 13,
-        16, 17, 18, 19, 18, 17,
-        20, 21, 22, 23, 22, 21
-    
-    };
-
-    void generate_quads_texture(
-
-        unsigned char* data,
-        const unsigned int width,
-        const unsigned int height
-
-    ) {
-
-        for(unsigned int x = 0; x < width; x++) {
-
-            for(unsigned int y = 0; y < height; y++) {
-
-                if((x < width / 2 && y < height / 2) || x >= width / 2 && y >= height / 2) {
-
-                    data[3 * (x + width * y) + 0] = 0;
-                    data[3 * (x + width * y) + 1] = 0;
-                    data[3 * (x + width * y) + 2] = 0;
-
-                }
-                else {
-
-                    data[3 * (x + width * y) + 0] = 255;
-                    data[3 * (x + width * y) + 1] = 255;
-                    data[3 * (x + width * y) + 2] = 255;
-
-                }
-
-            }
-
-        }
-
-    }
+    /*-----------------------------------------------*/
 
     const char* vertex_shader = R"(
         
         #version 330
         
-        layout(location = 0) in vec3 vertex_position;
-        layout(location = 1) in vec2 texture_coord;
+        layout (location = 0) in vec3 vertex_position;
+        layout (location = 1) in vec2 texture_coord;
         uniform mat4 model_matrix;
-        uniform mat4 view_projection_matrix;
-        uniform int current_frame;
         out vec2 tex_coord;
         
         void main() {
         
-            tex_coord = texture_coord + vec2(current_frame / 1000.0f * 0.1f, current_frame / 1000.0f * 0.1f);
-            gl_Position = view_projection_matrix * model_matrix * vec4(vertex_position, 1.0);
+            tex_coord = texture_coord;
+            gl_Position = model_matrix * vec4(vertex_position, 1.0);
         
         }
         
@@ -122,18 +58,14 @@ namespace TheExplosion {
         out vec4 frag_color;
         
         void main() {
-        
-            frag_color = texture(tex, tex_coord);
+
+            frag_color = texture2D(tex, tex_coord);
         
         }
         
     )";
 
-    std::unique_ptr<ShaderProgram> p_shader_program;
-    std::unique_ptr<VertexBuffer> p_positions_colors_vbo;
-    std::unique_ptr<IndexBuffer> p_index_buffer;
-    std::unique_ptr<VertexArray> p_vao;
-    std::unique_ptr<Texture2D> p_texture;
+    /*-----------------------------------------------*/
 	
 	Application::Application() {}
 	Application::~Application() {}
@@ -152,51 +84,63 @@ namespace TheExplosion {
         m_event_dispatcher.add_event_listener<EventKeyPressed>([&](EventKeyPressed& event) { Input::PressKey(event.key_code); });
         m_event_dispatcher.add_event_listener<EventKeyReleased>([&](EventKeyReleased& event) { Input::ReleaseKey(event.key_code); });
 		m_pWindow->set_event_callback([&](BaseEvent& event) { m_event_dispatcher.dispatch(event); });
+        Renderer::enable_depth_test();
         
-        int width = 423;
-        int height = 318;
-        int channels = 3;
-        unsigned char* img = stbi_load("img.png", &width, &height, &channels, STBI_rgb);
-        p_texture = std::make_unique<Texture2D>(img, width, height);
-        p_texture -> bind(0);
-        stbi_image_free(img);
+        /*-----------------------------------------------*/
 
-        BufferLayout buffer_layout {
-
-            ShaderDataType::Float3,
-            ShaderDataType::Float2
-
-        };
-
-        p_shader_program = std::make_unique<ShaderProgram>(
+        std::unique_ptr<ShaderProgram> p_shader_program = std::make_unique<ShaderProgram>(
 
             vertex_shader,
             fragment_shader
 
         );
 
-        p_vao = std::make_unique<VertexArray>();
+        p_shader_program->bind();
+        p_shader_program->set_int("tex", 0);
 
-        p_positions_colors_vbo = std::make_unique<VertexBuffer>(
+        const char* texPath = "Textures/image.png";
+        int width = 1024;
+        int height = 1024;
+        int channels = 3;
+        unsigned char* img = stbi_load(texPath, &width, &height, &channels, STBI_rgb);
+        std::unique_ptr<Texture2D> p_texture = std::make_unique<Texture2D>(img, width, height, 0);
+        stbi_image_free(img);
 
-            square_positions_coords,
-            sizeof(square_positions_coords),
+        std::vector<float> vertices = get_model_vertices("Models/model.obj");
+        std::vector<unsigned int> indices = get_model_indices("Models/model.obj");
+        std::unique_ptr<VertexArray> p_vao = std::make_unique<VertexArray>();
+
+        BufferLayout buffer_layout{
+        
+            ShaderDataType::Float3,
+            ShaderDataType::Float2
+        
+        };
+        
+        std::unique_ptr<VertexBuffer> p_positions_coords_vbo = std::make_unique<VertexBuffer>(
+        
+            vertices.data(),
+            vertices.size() * sizeof(GLfloat),
             buffer_layout
-
+        
+        );
+        
+        std::unique_ptr<IndexBuffer> p_index_buffer = std::make_unique<IndexBuffer>(
+        
+            indices.data(),
+            indices.size()
+        
         );
 
-        p_index_buffer = std::make_unique<IndexBuffer>(
+        p_vao -> set_buffers(*p_positions_coords_vbo, *p_index_buffer);
 
-            square_indices,
-            sizeof(square_indices) / sizeof(GLuint)
+        play_sound("Sounds/back.wav");
 
-        );
-
-        p_vao->add_vertex_buffer(*p_positions_colors_vbo);
-        p_vao->set_index_buffer(*p_index_buffer);
-        Renderer::enable_depth_test();
+        /*-----------------------------------------------*/
 
 		while(!m_bCloseWindow) {
+
+            /*-----------------------------------------------*/
 
             glm::mat4 square_scale_matrix(
 
@@ -249,34 +193,20 @@ namespace TheExplosion {
 
             );
 
-            glm::mat4 square_model_matrix = square_translation_matrix * square_rotation_matrix_z * square_rotation_matrix_y * square_rotation_matrix_x * square_scale_matrix;
-            
-            p_shader_program->bind();
+            glm::mat4 square_model_matrix = camera.get_projection_matrix() * camera.get_view_matrix() * square_translation_matrix * square_rotation_matrix_z * square_rotation_matrix_y * square_rotation_matrix_x * square_scale_matrix;
 
-            p_shader_program->setMatrix4(
+            p_shader_program -> setMatrix4(
 
                 "model_matrix",
                 square_model_matrix
 
             );
 
-            p_shader_program->setMatrix4(
+            /*-----------------------------------------------*/
 
-                "view_projection_matrix",
-                camera.get_projection_matrix() * camera.get_view_matrix()
-
-            );
-
-            double currentFrame = glfwGetTime();
+            currentFrame = glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
-
-            p_shader_program->set_int(
-
-                "current_frame",
-                (int)(lastFrame * 1000)
-
-            );
 
             Renderer::set_clear_color(
 
@@ -288,7 +218,13 @@ namespace TheExplosion {
             );
 
             Renderer::clear();
+
+            /*-----------------------------------------------*/
+
             Renderer::draw(*p_vao);
+
+            /*-----------------------------------------------*/
+
             UI::on_ui_draw_begin();
             on_ui_draw();
             UI::on_ui_draw_end();
@@ -336,5 +272,61 @@ namespace TheExplosion {
     }
 
     void Application::close() { m_bCloseWindow = true; }
+
+    void Application::play_sound(const char* path) { PlaySound(path, NULL, SND_ASYNC | SND_LOOP); }
+
+    std::vector<float> Application::get_model_vertices(const char* modelPath) {
+
+        Assimp::Importer importer;
+        const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+        std::vector<float> vertices = {};
+
+        for(unsigned int i = 0; i < scene -> mNumMeshes; i++) {
+
+            const aiMesh* mesh = scene -> mMeshes[i];
+
+            for(unsigned int k = 0; k < mesh -> mNumVertices; k++) {
+
+                const aiVector3D& pPos = mesh -> mVertices[k];
+                const aiVector3D& pTexCoord = mesh -> mTextureCoords[0][k];
+                vertices.push_back(pPos.x);
+                vertices.push_back(pPos.y);
+                vertices.push_back(pPos.z);
+                vertices.push_back(pTexCoord.x);
+                vertices.push_back(pTexCoord.y);
+
+            }
+
+        }
+
+        return vertices;
+
+    }
+
+    std::vector<unsigned int> Application::get_model_indices(const char* modelPath) {
+
+        Assimp::Importer importer;
+        const aiScene* scene = importer.ReadFile(modelPath, aiProcess_Triangulate | aiProcess_FlipUVs);
+        std::vector<unsigned int> indices = {};
+
+        for(unsigned int i = 0; i < scene -> mNumMeshes; i++) {
+
+            const aiMesh* mesh = scene -> mMeshes[i];
+
+            for(unsigned int l = 0; l < mesh -> mNumFaces; l++) {
+
+                const aiFace& face = mesh -> mFaces[l];
+                indices.push_back(face.mIndices[0]);
+                indices.push_back(face.mIndices[1]);
+                indices.push_back(face.mIndices[2]);
+
+            }
+
+
+        }
+
+        return indices;
+
+    }
 
 }

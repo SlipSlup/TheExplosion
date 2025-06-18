@@ -28,10 +28,10 @@ namespace TheExplosion {
         glfwInit();
 
         glfwWindowHint(
-
+        
             GLFW_MAXIMIZED,
             true
-
+        
         );
 
         m_pWindow = glfwCreateWindow(

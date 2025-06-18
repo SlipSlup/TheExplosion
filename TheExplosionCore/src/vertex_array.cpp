@@ -1,6 +1,8 @@
 
 #include "vertex_array.hpp"
 #include <glad/glad.h>
+#include <memory>
+#include <iostream>
 
 namespace TheExplosion {
 
@@ -52,7 +54,7 @@ namespace TheExplosion {
 
 	void VertexArray::unbind() { glBindVertexArray(0); }
 
-	void VertexArray::add_vertex_buffer(const VertexBuffer& vertex_buffer) {
+	void VertexArray::set_vertex_buffer(const VertexBuffer& vertex_buffer) {
 
 		bind();
 		vertex_buffer.bind();
@@ -83,6 +85,13 @@ namespace TheExplosion {
 		bind();
 		index_buffer.bind();
 		m_indices_count = index_buffer.get_count();
+
+	}
+
+	void VertexArray::set_buffers(const VertexBuffer& vertex_buffer, const IndexBuffer& index_buffer) {
+
+		set_vertex_buffer(vertex_buffer);
+		set_index_buffer(index_buffer);
 
 	}
 

@@ -11,7 +11,8 @@ namespace TheExplosion {
 
 			const unsigned char* data,
 			const unsigned int width,
-			const unsigned int height
+			const unsigned int height,
+			const unsigned int unit
 
 		);
 
@@ -20,7 +21,6 @@ namespace TheExplosion {
 		Texture2D& operator = (const Texture2D&) = delete;
 		Texture2D& operator = (Texture2D&& texture) noexcept;
 		Texture2D(Texture2D&& texture) noexcept;
-		void bind(const unsigned int unit) const;
 
 	private:
 

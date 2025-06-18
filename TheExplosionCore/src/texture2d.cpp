@@ -10,7 +10,9 @@ namespace TheExplosion {
 
 		const unsigned char* data,
 		const unsigned int width,
-		const unsigned int height
+		const unsigned int height,
+		const unsigned int unit
+
 
 	) :
 
@@ -20,6 +22,7 @@ namespace TheExplosion {
 	{
 
 		glGenTextures(1, &m_id);
+		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -49,13 +52,6 @@ namespace TheExplosion {
 		m_height = texture.m_height;
 		texture.m_id = 0;
 
-	}
-
-	void Texture2D::bind(const unsigned int unit) const {
-
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, m_id);
-	
 	}
 
 }

@@ -6,7 +6,7 @@ namespace TheExplosion {
 
 	constexpr GLenum usage_to_GLenum(const VertexBuffer::EUsage usage) {
 
-		switch (usage) {
+		switch(usage) {
 
 			case VertexBuffer::EUsage::Static: return GL_STATIC_DRAW;
 			case VertexBuffer::EUsage::Dynamic: return GL_DYNAMIC_DRAW;

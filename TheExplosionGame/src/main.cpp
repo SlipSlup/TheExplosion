@@ -3,6 +3,7 @@
 #include <imgui/imgui.h>
 #include <string>
 #include <input.hpp>
+#include <vertex_array.hpp>
 
 class TheExplosionGame : public TheExplosion::Application {
 
@@ -65,7 +66,7 @@ class TheExplosionGame : public TheExplosion::Application {
 
         }
         
-        ImGui::Begin("Menu");
+        ImGui::Begin(" ");
         ImGui::Text(" ");
         ImGui::Text("FPS : ");
 
@@ -170,45 +171,6 @@ class TheExplosionGame : public TheExplosion::Application {
 
         ImGui::Text(std::to_string(camera.get_camera_rotation().z).c_str());
         ImGui::Text(" ");
-
-        ImGui::Text("Background");
-
-        ImGui::ColorEdit3(
-
-            "Background Color",
-            m_background_color
-
-        );
-
-        ImGui::Text("Square");
-
-        ImGui::SliderFloat3(
-
-            "Square Scale",
-            square_scale,
-            0.0f,
-            2.0f
-
-        );
-
-        ImGui::SliderFloat3(
-
-            "Square Rotation",
-            square_rotation,
-            -180.0f,
-            180.0f
-
-        );
-
-        ImGui::SliderFloat3(
-
-            "Square Translation",
-            square_translation,
-            -1.0f,
-            1.0f
-
-        );
-
         ImGui::End();
 
 	}
